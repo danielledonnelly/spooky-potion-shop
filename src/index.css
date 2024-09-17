@@ -1,31 +1,24 @@
 :root {
-  /* Shades of Black */
-  /* I know that black technically doesn't have shades */
-  /* Because black is in fact itself a shade, not a color */
-  /* But just let me have this, okay? */
-  --black-dark: #1A1A1A;
-  --black: #222222;
-  --black-light: #333333;
+  --black: #1A1A1A;
+  --dark-grey: #333333;
+  --medium-grey: #535353;
+  --light-grey: #a5a5a5; 
+  --pale-grey: #c4c4c4;
+  --white: #f4ffd4;
 
-  /* Shades of Orange */
-  --orange-dark: #A63A00;
+  --dark-orange: #A63A00;
   --orange: #FF6A00;
-  --orange-light: #FF9D47;
+  --light-orange: #FF9D47;
 
-  /* Shades of Green */
-  --green-dark: #5EC300;
+  --dark-green: #5EC300;
   --green: #87FF00; 
-  --green-light: #A3FF4D;
+  --light-green: #A3FF4D;
 
-  /* Shades of Purple */
-  --purple-dark: #4B007D;
+  --dark-purple: #4B007D;
   --purple: #7000FF;
-  --purple-light: #B47FFF;
+  --light-purple: #B47FFF;
 
-  /* Accent Colors */
-  --white: #FFFFFF;
-  --grey: #AAAAAA;
-  --shadow: #2F2F2F; 
+  --yellow: #FDD404;
 }
 
 body {
@@ -41,14 +34,13 @@ body {
 button {
   background-color: var(--green);
   color: var(--black);
-  border: 2px solid var(--green-dark);
+  border: 2px solid var(--dark-green);
   padding: 10px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: var(--green-light);
+  background-color: var(--light-green);
   border-color: var(--green);
 }
 
@@ -63,16 +55,47 @@ h2 {
 .card {
   background-color: var(--black);
   border: 1px solid var(--grey);
-  box-shadow: 0px 4px 8px var(--shadow);
   padding: 20px;
   border-radius: 10px;
 }
 
 .card:hover {
-  background-color: var(--black-light);
+  background-color: var(--light-grey);
 }
 
 .icon {
-  fill: var(--purple-light);
+  fill: var(--light-purple);
 }
 
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px; 
+  justify-content: center; 
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+}
+
+.ingredient-button {
+  background-color: transparent !important;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.2s ease-in-out;
+}
+
+.ingredient-button img {
+  width: 120px; 
+  height: 120px;
+}
+
+.ingredient-button:hover img {
+  transform: scale(1.2); 
+}
+
+.ingredient-button:focus {
+  outline: none;
+}
