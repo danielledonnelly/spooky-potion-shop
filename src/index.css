@@ -1,68 +1,78 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  /* Shades of Black */
+  /* I know that black technically doesn't have shades */
+  /* Because black is in fact itself a shade, not a color */
+  /* But just let me have this, okay? */
+  --black-dark: #1A1A1A;
+  --black: #222222;
+  --black-light: #333333;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* Shades of Orange */
+  --orange-dark: #A63A00;
+  --orange: #FF6A00;
+  --orange-light: #FF9D47;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  /* Shades of Green */
+  --green-dark: #5EC300;
+  --green: #87FF00; 
+  --green-light: #A3FF4D;
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+  /* Shades of Purple */
+  --purple-dark: #4B007D;
+  --purple: #7000FF;
+  --purple-light: #B47FFF;
+
+  /* Accent Colors */
+  --white: #FFFFFF;
+  --grey: #AAAAAA;
+  --shadow: #2F2F2F; 
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  background-color: var(--black-dark);
+  color: var(--white);
+  background-image: url('./src/assets/background.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--green);
+  color: var(--black);
+  border: 2px solid var(--green-dark);
+  padding: 10px;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: background-color 0.3s ease;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+button:hover {
+  background-color: var(--green-light);
+  border-color: var(--green);
 }
+
+h1 {
+  color: var(--orange);
+}
+
+h2 {
+  color: var(--purple);
+}
+
+.card {
+  background-color: var(--black);
+  border: 1px solid var(--grey);
+  box-shadow: 0px 4px 8px var(--shadow);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.card:hover {
+  background-color: var(--black-light);
+}
+
+.icon {
+  fill: var(--purple-light);
+}
+

@@ -4,12 +4,9 @@ import PotionBrewer from './components/PotionBrewer';
 
 function App() {
   return (
-    <Container maxWidth="sm">
-      <Typography variant="h2" align="center" gutterBottom>
-        Spooky Potion Shop
-      </Typography>
-      <PotionBrewer />
-    </Container>
+    <div>
+      ...
+    </div>
   );
 }
 
