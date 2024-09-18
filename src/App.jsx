@@ -14,13 +14,10 @@ function App() {
   return (
     <Container>
       <Typography variant="h4" align="center" marginY={4}>
-        Spooky Potion Shop
       </Typography>
-
       {/* Grid to display ingredients and brewing area side by side */}
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
-          <Typography variant="h6">Select Ingredients</Typography>
           <IngredientsList addIngredient={addIngredient} />
         </Grid>
 

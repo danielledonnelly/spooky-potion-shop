@@ -6,12 +6,15 @@ const PotionBrewer = ({ selectedIngredients }) => {
   const [isBrewing, setIsBrewing] = useState(false);
   const [progress, setProgress] = useState(0);
   const [potionCount, setPotionCount] = useState(0);
+  const [brewingTime, setBrewingTime] = useState(3000); // Initial brewing time 
+  const [potionReady, setPotionReady] = useState(false); // Track potion completion
 
   // Start brewing if ingredients are selected
   const startBrewing = () => {
     if (selectedIngredients.length > 0) {
       setIsBrewing(true);
       setProgress(0);
+      setPotionReady(false); // Reset potion ready message
     } else {
       alert('Please select ingredients to brew!');
     }
@@ -19,20 +22,24 @@ const PotionBrewer = ({ selectedIngredients }) => {
 
   // Effect to handle brewing progress
   useEffect(() => {
+    let interval;
     if (isBrewing && progress < 100) {
-      const interval = setInterval(() => {
-        setProgress((prev) => prev + 10);
-      }, 1000);
-
-      if (progress === 100) {
-        clearInterval(interval);
-        setIsBrewing(false);
-        setPotionCount(potionCount + 1);  // Add a potion to inventory
-      }
+      interval = setInterval(() => {
+        setProgress((prev) => prev + 1);
+      }, brewingTime / 100); // Adjust brewing speed based on brewing time
 
       return () => clearInterval(interval);
+    } else if (progress === 100) {
+      clearInterval(interval);
+      setIsBrewing(false);
+      setPotionCount((prevCount) => prevCount + 1); // Add a potion to the inventory
+      setPotionReady(true); // Display the potion ready message
+      setProgress(0); // Reset progress bar
+
+      // Reduce brewing time by 10% for future potions
+      setBrewingTime((prevTime) => prevTime * 0.9);
     }
-  }, [isBrewing, progress]);
+  }, [isBrewing, progress, brewingTime]);
 
   return (
     <Box>
@@ -52,6 +59,12 @@ const PotionBrewer = ({ selectedIngredients }) => {
       </Box>
 
       <BrewingProgressBar progress={progress} />
+
+      {potionReady && (
+        <Typography variant="h6" color="green" marginTop={2}>
+          You made a potion!
+        </Typography>
+      )}
 
       <Box marginTop={4}>
         <Typography variant="h6">Potions Brewed: {potionCount}</Typography>

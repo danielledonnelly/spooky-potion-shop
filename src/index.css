@@ -2,7 +2,7 @@
   --black: #1A1A1A;
   --dark-grey: #333333;
   --medium-grey: #535353;
-  --light-grey: #a5a5a5; 
+  --light-grey: #a5a5a5;
   --pale-grey: #c4c4c4;
   --white: #f4ffd4;
 
@@ -13,28 +13,29 @@
   --yellow: #FDD404;
 
   --dark-green: #5EC300;
-  --green: #87FF00; 
+  --green: #87FF00;
   --light-green: #A3FF4D;
 
   --dark-purple: #4B007D;
   --purple: #7000FF;
   --light-purple: #B47FFF;
-
 }
 
 body {
-  background-color: var(--black-dark);
+  background-color: var(--black);
   color: var(--white);
   background-image: url('./src/assets/background.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  margin: 0;
+  padding-top: 100px;
+  height: 100%;
+  overflow: hidden;
 }
 
 button {
-  background-color: var(--green);
-  color: var(--black);
   border: 2px solid var(--dark-green);
   padding: 10px;
   cursor: pointer;
@@ -55,7 +56,7 @@ h2 {
 
 .card {
   background-color: var(--black);
-  border: 1px solid var(--grey);
+  border: 1px solid var(--medium-grey);
   padding: 20px;
   border-radius: 10px;
 }
@@ -72,12 +73,12 @@ h2 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px; 
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
   position: absolute;
-  top: 50%;
+  top: 65%;
   left: 50%;
-  transform: translate(-50%, -50%); 
+  transform: translate(-50%, -50%);
 }
 
 .ingredient-button {
@@ -89,8 +90,9 @@ h2 {
 }
 
 .ingredient-button img {
-  width: 120px; 
-  height: 120px;
+  width: 70px;
+  height: 70px;
+  background-color: transparent !important;
 }
 
 .ingredient-button:hover img {
@@ -100,3 +102,26 @@ h2 {
 .ingredient-button:focus {
   outline: none;
 }
+
+.selected-ingredients {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.selected-ingredients ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.MuiCard-root .MuiCardMedia-root {
+  background-color: transparent !important;
+}
+
+.MuiCard-root .MuiCardContent-root {
+  background-color: transparent !important;
+}
+
