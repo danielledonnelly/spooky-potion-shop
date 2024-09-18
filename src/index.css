@@ -10,6 +10,8 @@
   --orange: #FF6A00;
   --light-orange: #FF9D47;
 
+  --yellow: #FDD404;
+
   --dark-green: #5EC300;
   --green: #87FF00; 
   --light-green: #A3FF4D;
@@ -18,7 +20,6 @@
   --purple: #7000FF;
   --light-purple: #B47FFF;
 
-  --yellow: #FDD404;
 }
 
 body {

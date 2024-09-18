@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Typography } from '@mui/material';
+import { Container, Typography, Grid, Box } from '@mui/material';
 import IngredientsList from './components/IngredientList';
 import PotionBrewer from './components/PotionBrewer';
 
@@ -12,17 +12,24 @@ function App() {
   };
 
   return (
-    <div>
-      <IngredientsList addIngredient={addIngredient} />
-      <div className="selected-ingredients">
-        <h2>Selected Ingredients:</h2>
-        <ul>
-          {selectedIngredients.map((ingredient, index) => (
-            <li key={index}>{ingredient}</li>
-          ))}
-        </ul>
-      </div>
-    </div>
+    <Container>
+      <Typography variant="h4" align="center" marginY={4}>
+        Spooky Potion Shop
+      </Typography>
+
+      {/* Grid to display ingredients and brewing area side by side */}
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={6}>
+          <Typography variant="h6">Select Ingredients</Typography>
+          <IngredientsList addIngredient={addIngredient} />
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          <PotionBrewer selectedIngredients={selectedIngredients} />
+        </Grid>
+      </Grid>
+    </Container>
   );
 }
+
 export default App;

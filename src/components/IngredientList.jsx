@@ -1,4 +1,5 @@
 import React from 'react';
+import { Grid, Card, CardMedia, Button, CardContent, Typography } from '@mui/material';
 
 const ingredients = [
   { name: 'Pumpkin', image: './src/assets/pumpkin.png' },
@@ -14,17 +15,33 @@ const ingredients = [
 
 const IngredientList = ({ addIngredient }) => {
   return (
-    <div className="grid-container">
+    <Grid container spacing={2}>
       {ingredients.map((ingredient) => (
-        <button
-          key={ingredient.name}
-          className="ingredient-button"
-          onClick={() => addIngredient(ingredient.name)}
-        >
-          <img src={ingredient.image} alt={ingredient.name} />
-        </button>
+        <Grid item xs={4} key={ingredient.name}>
+          <Card>
+            <CardMedia
+              component="img"
+              alt={ingredient.name}
+              image={ingredient.image}
+              height="140"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h6" component="div">
+                {ingredient.name}
+              </Typography>
+              <Button
+                variant="contained"
+                color="secondary"
+                fullWidth
+                onClick={() => addIngredient(ingredient.name)}
+              >
+                Add to Potion
+              </Button>
+            </CardContent>
+          </Card>
+        </Grid>
       ))}
-    </div>
+    </Grid>
   );
 };
 

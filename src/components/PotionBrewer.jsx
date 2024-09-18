@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Grid, Typography, CircularProgress, Box } from '@mui/material';
+import { Button, Typography, Box } from '@mui/material';
 import BrewingProgressBar from './BrewingProgressBar';
 
-const PotionBrewer = () => {
+const PotionBrewer = ({ selectedIngredients }) => {
   const [isBrewing, setIsBrewing] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [selectedIngredients, setSelectedIngredients] = useState([]);
-  const ingredients = ['Pumpkin', 'Toadstool', 'Ghost Essence'];
+  const [potionCount, setPotionCount] = useState(0);
 
-  // Start Brewing Function
+  // Start brewing if ingredients are selected
   const startBrewing = () => {
     if (selectedIngredients.length > 0) {
       setIsBrewing(true);
@@ -18,7 +17,7 @@ const PotionBrewer = () => {
     }
   };
 
-  // Effect to increment progress while brewing
+  // Effect to handle brewing progress
   useEffect(() => {
     if (isBrewing && progress < 100) {
       const interval = setInterval(() => {
@@ -28,6 +27,7 @@ const PotionBrewer = () => {
       if (progress === 100) {
         clearInterval(interval);
         setIsBrewing(false);
+        setPotionCount(potionCount + 1);  // Add a potion to inventory
       }
 
       return () => clearInterval(interval);
@@ -36,23 +36,7 @@ const PotionBrewer = () => {
 
   return (
     <Box>
-      <Typography variant="h5">Select Ingredients</Typography>
-      <Grid container spacing={2} marginBottom={3}>
-        {ingredients.map((ingredient) => (
-          <Grid item key={ingredient}>
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={() =>
-                setSelectedIngredients([...selectedIngredients, ingredient])
-              }
-            >
-              {ingredient}
-            </Button>
-          </Grid>
-        ))}
-      </Grid>
-
+      <Typography variant="h5">Potion Brewer</Typography>
       <Typography variant="h6">Selected Ingredients:</Typography>
       <Typography>{selectedIngredients.join(', ') || 'None selected'}</Typography>
 
@@ -68,6 +52,10 @@ const PotionBrewer = () => {
       </Box>
 
       <BrewingProgressBar progress={progress} />
+
+      <Box marginTop={4}>
+        <Typography variant="h6">Potions Brewed: {potionCount}</Typography>
+      </Box>
     </Box>
   );
 };
