@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Typography, Grid, Box } from '@mui/material';
+import { Container, Typography, Box, Grid2 } from '@mui/material';
 import IngredientsList from './components/IngredientList';
 import PotionBrewer from './components/PotionBrewer';
 
@@ -15,16 +15,17 @@ function App() {
     <Container>
       <Typography variant="h4" align="center" marginY={4}>
       </Typography>
-      {/* Grid to display ingredients and brewing area side by side */}
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
-          <IngredientsList addIngredient={addIngredient} />
-        </Grid>
 
-        <Grid item xs={12} md={6}>
+      {/* Grid2 from Material UI V5 */}
+      <Grid2 container spacing={3}>
+        <Grid2 xs={12} md={6}>
+          <IngredientsList addIngredient={addIngredient} />
+        </Grid2>
+
+        <Grid2 xs={12} md={6}>
           <PotionBrewer selectedIngredients={selectedIngredients} />
-        </Grid>
-      </Grid>
+        </Grid2>
+      </Grid2>
     </Container>
   );
 }
