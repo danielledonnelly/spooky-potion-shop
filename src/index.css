@@ -125,3 +125,28 @@ h2 {
   background-color: transparent !important;
 }
 
+.mascot {
+  position: absolute !important;
+  top: 50%;           
+  left: 20px;          
+  transform: translateY(-50%);  
+  z-index: 1000;
+}
+.mascot-image {
+  width: 150px;      
+  height: 450px;
+}
+
+.bookshelf-button {
+  position: absolute !important;
+  top: 200px;              
+  right: 20px;         
+  transform: none;        
+}
+
+.bookshelf-image {
+  width: 420px;
+  height: 420px;
+  cursor: pointer;
+}
+

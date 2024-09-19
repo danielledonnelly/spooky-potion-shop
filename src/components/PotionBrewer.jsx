@@ -1,42 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Typography, Box } from '@mui/material';
 import BrewingProgressBar from './BrewingProgressBar';
+import BookshelfButton from './BookshelfButton';  // Import the new component
 
 const PotionBrewer = ({ selectedIngredients }) => {
   const [isBrewing, setIsBrewing] = useState(false);
   const [progress, setProgress] = useState(0);
   const [potionCount, setPotionCount] = useState(0);
-  const [brewingTime, setBrewingTime] = useState(3000); // Initial brewing time 
-  const [potionReady, setPotionReady] = useState(false); // Track potion completion
+  const [brewingTime, setBrewingTime] = useState(3000);
+  const [potionReady, setPotionReady] = useState(false);
 
-  // Start brewing if ingredients are selected
   const startBrewing = () => {
     if (selectedIngredients.length > 0) {
       setIsBrewing(true);
       setProgress(0);
-      setPotionReady(false); // Reset potion ready message
+      setPotionReady(false);
     } else {
       alert('Please select ingredients to brew!');
     }
   };
 
-  // Effect to handle brewing progress
   useEffect(() => {
     let interval;
     if (isBrewing && progress < 100) {
       interval = setInterval(() => {
         setProgress((prev) => prev + 1);
-      }, brewingTime / 100); // Adjust brewing speed based on brewing time
+      }, brewingTime / 100);
 
       return () => clearInterval(interval);
     } else if (progress === 100) {
       clearInterval(interval);
       setIsBrewing(false);
-      setPotionCount((prevCount) => prevCount + 1); // Add a potion to the inventory
-      setPotionReady(true); // Display the potion ready message
-      setProgress(0); // Reset progress bar
-
-      // Reduce brewing time by 10% for future potions
+      setPotionCount((prevCount) => prevCount + 1);
+      setPotionReady(true);
+      setProgress(0);
       setBrewingTime((prevTime) => prevTime * 0.9);
     }
   }, [isBrewing, progress, brewingTime]);
@@ -69,6 +66,9 @@ const PotionBrewer = ({ selectedIngredients }) => {
       <Box marginTop={4}>
         <Typography variant="h6">Potions Brewed: {potionCount}</Typography>
       </Box>
+
+      {/* Bookshelf Button to show the ingredient list */}
+      <BookshelfButton ingredients={selectedIngredients} />
     </Box>
   );
 };
