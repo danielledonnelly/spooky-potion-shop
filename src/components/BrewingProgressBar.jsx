@@ -3,12 +3,22 @@ import { LinearProgress, Box, Typography } from '@mui/material';
 
 const BrewingProgressBar = ({ progress }) => {
   return (
-    <Box marginTop={4}>
-      <Typography variant="h6">Brewing Progress:</Typography>
-      <LinearProgress variant="determinate" value={progress} />
-      <Typography align="center" marginTop={1}>
-        {progress}%
+    <Box sx={{ width: '100%', marginTop: 2 }}>
+      <Typography variant="body2" color="white">
+        Brewing Progress: {Math.round(progress)}%
       </Typography>
+      <LinearProgress
+        variant="determinate"
+        value={progress}
+        sx={{
+          height: '10px',
+          borderRadius: '5px',
+          backgroundColor: 'var(--light-grey)',
+          '& .MuiLinearProgress-bar': {
+            backgroundColor: 'var(--green)',
+          },
+        }}
+      />
     </Box>
   );
 };

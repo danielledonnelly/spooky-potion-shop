@@ -1,74 +1,49 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Typography, Box } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import BrewingProgressBar from './BrewingProgressBar';
-import BookshelfButton from './BookshelfButton';  // Import the new component
 
-const PotionBrewer = ({ selectedIngredients }) => {
+const PotionBrewer = () => {
   const [isBrewing, setIsBrewing] = useState(false);
   const [progress, setProgress] = useState(0);
   const [potionCount, setPotionCount] = useState(0);
-  const [brewingTime, setBrewingTime] = useState(3000);
-  const [potionReady, setPotionReady] = useState(false);
-
-  const startBrewing = () => {
-    if (selectedIngredients.length > 0) {
-      setIsBrewing(true);
-      setProgress(0);
-      setPotionReady(false);
-    } else {
-      alert('Please select ingredients to brew!');
-    }
-  };
+  const [brewingTime] = useState(3000); // Adjust this for brewing speed
 
   useEffect(() => {
-    let interval;
+    if (!isBrewing) {
+      setIsBrewing(true);
+    }
+
     if (isBrewing && progress < 100) {
-      interval = setInterval(() => {
+      const interval = setInterval(() => {
         setProgress((prev) => prev + 1);
       }, brewingTime / 100);
 
       return () => clearInterval(interval);
     } else if (progress === 100) {
-      clearInterval(interval);
-      setIsBrewing(false);
-      setPotionCount((prevCount) => prevCount + 1);
-      setPotionReady(true);
-      setProgress(0);
-      setBrewingTime((prevTime) => prevTime * 0.9);
+      setProgress(0); // Reset progress to 0
+      setPotionCount((prevCount) => prevCount + 1); // Increment potion count
     }
   }, [isBrewing, progress, brewingTime]);
 
   return (
-    <Box>
-      <Typography variant="h5">Potion Brewer</Typography>
-      <Typography variant="h6">Selected Ingredients:</Typography>
-      <Typography>{selectedIngredients.join(', ') || 'None selected'}</Typography>
-
-      <Box marginTop={2}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={startBrewing}
-          disabled={isBrewing}
-        >
-          {isBrewing ? 'Brewing...' : 'Start Brewing'}
-        </Button>
-      </Box>
+    <Box
+      sx={{
+        backgroundColor: 'var(--black)',
+        padding: '20px',
+        borderRadius: '10px',
+        width: '100%',
+        maxWidth: '350px',
+        margin: 'auto',
+        textAlign: 'center',
+      }}
+    >
+      <Typography variant="h6" color="white">Potion Brewer</Typography>
 
       <BrewingProgressBar progress={progress} />
 
-      {potionReady && (
-        <Typography variant="h6" color="green" marginTop={2}>
-          You made a potion!
-        </Typography>
-      )}
-
-      <Box marginTop={4}>
-        <Typography variant="h6">Potions Brewed: {potionCount}</Typography>
-      </Box>
-
-      {/* Bookshelf Button to show the ingredient list */}
-      <BookshelfButton ingredients={selectedIngredients} />
+      <Typography variant="h6" color="white" marginTop={2}>
+        Potions Brewed: {potionCount}
+      </Typography>
     </Box>
   );
 };

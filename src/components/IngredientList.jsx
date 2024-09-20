@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid2, CardMedia, Box, Typography } from '@mui/material';
 
 // Import ingredient images
@@ -20,6 +20,17 @@ const ingredients = [
 ];
 
 const IngredientList = ({ addIngredient }) => {
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
+
+  const handleIngredientClick = (ingredientName) => {
+    if (selectedIngredients.includes(ingredientName)) {
+      setSelectedIngredients(selectedIngredients.filter(item => item !== ingredientName));  // Unselect if already selected
+    } else {
+      setSelectedIngredients([...selectedIngredients, ingredientName]);  // Add to selected list
+    }
+    addIngredient(ingredientName); // Call the addIngredient function
+  };
+
   return (
     <Box
       sx={{
@@ -28,34 +39,43 @@ const IngredientList = ({ addIngredient }) => {
         borderRadius: '10px',   // Rounded corners to resemble a menu
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',  // Add some shadow for depth
         width: '100%',  // Full width
-        maxHeight: '420px',
-        maxWidth: '350px',  // Reduced width for a narrower menu
+        maxHeight: '410px',
+        maxWidth: '350px',  // Adjusted width for better fit
         margin: '0 auto',  // Center the box horizontally
       }}
     >
-      <Typography variant="h6" align="center" color="white" marginBottom={2}>
-        Choose Your Ingredients
-      </Typography>
+
       
-      <Grid2 container spacing={2} justifyContent="center">  {/* Grid layout */}
+      <Grid2 container spacing={1} justifyContent="center">  {/* Reduced spacing */}
         {ingredients.map((ingredient, index) => (
-          <Grid2 item xs={6} key={index}>  {/* 2 items per row */}
-            <CardMedia
-              component="img"
-              alt={ingredient.name}
-              image={ingredient.image}
-              onClick={() => addIngredient(ingredient.name)}
+          <Grid2 item xs={6} key={index} sx={{ position: 'relative' }}>  {/* 2 items per row */}
+            <Box
               sx={{
-                cursor: 'pointer',
-                width: '100%', 
-                height: '110px',  // Consistent height for all images
-                objectFit: 'contain',
-                transition: 'transform 0.2s',
-                '&:hover': {
-                  transform: 'scale(1.1)', 
-                },
+                position: 'relative',
+                width: '140px',  // Further reduce size to fit all ingredients
+                height: '140px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: selectedIngredients.includes(ingredient.name) ? 'var(--dark-purple)' : 'transparent',  // Use purple variable
+                transition: 'background-color 0.2s',
               }}
-            />
+            >
+              <CardMedia
+                component="img"
+                alt={ingredient.name}
+                image={ingredient.image}
+                onClick={() => handleIngredientClick(ingredient.name)}
+                sx={{
+                  cursor: 'pointer',
+                  width: selectedIngredients.includes(ingredient.name) ? '70%' : '60%',  // Adjusted sizes
+                  height: 'auto',  // Auto height to maintain aspect ratio
+                  objectFit: 'contain',
+                  transition: 'transform 0.2s, width 0.2s',
+                  transform: selectedIngredients.includes(ingredient.name) ? 'scale(1.1)' : 'scale(1)',
+                }}
+              />
+            </Box>
           </Grid2>
         ))}
       </Grid2>
