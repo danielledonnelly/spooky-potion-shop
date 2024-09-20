@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid2, CardMedia, Box, Typography } from '@mui/material';
+import { Grid2, CardMedia, Box } from '@mui/material';
 
 // Import ingredient images
 import ingredient1 from '../assets/ingredient1.png';
@@ -23,12 +23,12 @@ const IngredientList = ({ addIngredient }) => {
   const [selectedIngredients, setSelectedIngredients] = useState([]);
 
   const handleIngredientClick = (ingredientName) => {
-    if (selectedIngredients.includes(ingredientName)) {
-      setSelectedIngredients(selectedIngredients.filter(item => item !== ingredientName));  // Unselect if already selected
-    } else {
-      setSelectedIngredients([...selectedIngredients, ingredientName]);  // Add to selected list
-    }
-    addIngredient(ingredientName); // Call the addIngredient function
+    setSelectedIngredients(prevSelected =>
+      prevSelected.includes(ingredientName)
+        ? prevSelected.filter(item => item !== ingredientName)
+        : [...prevSelected, ingredientName]
+    );
+    addIngredient(ingredientName);
   };
 
   return (
@@ -44,20 +44,17 @@ const IngredientList = ({ addIngredient }) => {
         margin: '0 auto',  // Center the box horizontally
       }}
     >
-
-      
-      <Grid2 container spacing={1} justifyContent="center">  {/* Reduced spacing */}
+      <Grid2 container spacing={0.5} justifyContent="center">  {/* Reduced spacing */}
         {ingredients.map((ingredient, index) => (
-          <Grid2 item xs={6} key={index} sx={{ position: 'relative' }}>  {/* 2 items per row */}
+          <Grid2 item xs={4} key={index}>  {/* 3 items per row */}
             <Box
               sx={{
-                position: 'relative',
-                width: '140px',  // Further reduce size to fit all ingredients
-                height: '140px',
+                width: '110px',
+                height: '110px',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: selectedIngredients.includes(ingredient.name) ? 'var(--dark-purple)' : 'transparent',  // Use purple variable
+                backgroundColor: selectedIngredients.includes(ingredient.name) ? 'var(--dark-purple)' : 'transparent',
                 transition: 'background-color 0.2s',
               }}
             >
@@ -69,7 +66,7 @@ const IngredientList = ({ addIngredient }) => {
                 sx={{
                   cursor: 'pointer',
                   width: selectedIngredients.includes(ingredient.name) ? '70%' : '60%',  // Adjusted sizes
-                  height: 'auto',  // Auto height to maintain aspect ratio
+                  height: 'auto',
                   objectFit: 'contain',
                   transition: 'transform 0.2s, width 0.2s',
                   transform: selectedIngredients.includes(ingredient.name) ? 'scale(1.1)' : 'scale(1)',
