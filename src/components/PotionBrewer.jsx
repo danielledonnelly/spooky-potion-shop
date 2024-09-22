@@ -1,78 +1,99 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, Button, LinearProgress } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 
 const PotionBrewer = () => {
-  const [progress, setProgress] = useState(0);
-  const [potionCount, setPotionCount] = useState(0);
-  const [clickBoost, setClickBoost] = useState(10); // Click adds 10% progress
+  // State variables
+  const [potions, setPotions] = useState(0);
+  const [funds, setFunds] = useState(0);
+  const [inventory, setInventory] = useState(0);
+  const [pricePerPotion, setPricePerPotion] = useState(1); // Start at $1 per potion
+  const [demand, setDemand] = useState(50); // Percentage for sales
+  const [cauldrons, setCauldrons] = useState(1); // Start with 1 cauldron
+  const [cauldronCost, setCauldronCost] = useState(20); // Start cauldron cost
+  const [sellInterval, setSellInterval] = useState(1000); // Start with 1 second sell interval
 
-  // Handle click to boost brewing process
-  const handleClick = () => {
-    setProgress(prevProgress => Math.min(prevProgress + clickBoost, 100));
+  // Brew a potion manually
+  const makePotion = () => {
+    setPotions(prev => prev + cauldrons); // Brew as many potions as you have cauldrons
+    setInventory(prev => prev + cauldrons); // Add brewed potions to inventory
   };
 
-  // Auto-brewing effect
-  useEffect(() => {
-    const brewingInterval = setInterval(() => {
-      setProgress(prevProgress => {
-        if (prevProgress >= 100) {
-          setPotionCount(prevCount => prevCount + 1); // Add potion when brewing completes
-          return 0; // Reset progress once full
-        }
-        return prevProgress + 1; // Increment by 1% each second
-      });
-    }, 1000); // Auto progress by 1% every second
+  // Adjust price per potion and dynamically update sell interval
+  const lowerPrice = () => {
+    if (pricePerPotion > 0.1) {
+      const newPrice = parseFloat((pricePerPotion - 0.1).toFixed(2));
+      setPricePerPotion(newPrice);
+      updateSellInterval(newPrice); // Adjust sell interval based on the new price
+    }
+  };
 
-    return () => clearInterval(brewingInterval); // Clean up interval on unmount
-  }, []);
+  const raisePrice = () => {
+    const newPrice = parseFloat((parseFloat(pricePerPotion) + 0.1).toFixed(2));
+    setPricePerPotion(newPrice);
+    updateSellInterval(newPrice); // Adjust sell interval based on the new price
+  };
+
+  // Adjust sell interval dynamically based on price
+  const updateSellInterval = (price) => {
+    const baseInterval = 1000; // Base sell interval is 1 second
+    const newInterval = baseInterval * price; // The higher the price, the slower it sells
+    setSellInterval(Math.max(200, newInterval)); // Ensure minimum interval is 200ms
+  };
+
+  // Buy a new cauldron to increase potion production per click
+  const buyCauldron = () => {
+    if (funds >= cauldronCost) {
+      setFunds(prev => prev - cauldronCost); // Deduct the funds
+      setCauldrons(prev => prev + 1); // Increase the number of cauldrons
+      setCauldronCost(prev => prev + 15); // Increase the cost of the next cauldron
+    }
+  };
+
+  // Sell potions automatically based on demand and price
+  const sellPotions = () => {
+    if (inventory > 0) {
+      const sellRate = (demand / 100); // Sell percentage of potions based on demand
+      const potionsToSell = Math.min(inventory, Math.ceil(sellRate)); // Sell 1 potion at a time
+
+      if (potionsToSell > 0) {
+        setInventory(prev => prev - potionsToSell); // Reduce inventory
+        setFunds(prev => prev + potionsToSell * pricePerPotion); // Increase funds based on the number of potions sold
+      }
+    }
+  };
+
+  // Auto-sell potions based on the dynamic interval
+  useEffect(() => {
+    const interval = setInterval(() => {
+      sellPotions();
+    }, sellInterval); // Use the dynamic sell interval
+    return () => clearInterval(interval); // Cleanup
+  }, [inventory, funds, pricePerPotion, demand, sellInterval]); // Dependencies
 
   return (
     <Box
       sx={{
         backgroundColor: 'var(--black)',
         padding: '20px',
+        color: 'white',
         borderRadius: '10px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-        width: '100%',
-        maxHeight: '410px',
-        maxWidth: '350px',
+        maxWidth: '500px',
         margin: '0 auto',
       }}
     >
-      <Typography variant="h6" color="white" mb={2}>
-        Brewing Progress:
-      </Typography>
-      
-      <LinearProgress
-        variant="determinate"
-        value={progress}
-        sx={{ 
-          height: '10px', 
-          backgroundColor: 'var(--dark-purple)', 
-          borderRadius: '5px', 
-          mb: 2, 
-          '& .MuiLinearProgress-bar': {
-            backgroundColor: 'var(--purple)', 
-          }
-        }}
-      />
-      
-      <Typography variant="h6" color="white" mb={2}>
-        Potions Brewed: {potionCount}
-      </Typography>
-      
-      <Button 
-        variant="contained" 
-        onClick={handleClick}
-        sx={{ 
-          backgroundColor: 'var(--purple)',
-          width: '100%', 
-          '&:hover': {
-            backgroundColor: 'var(--dark-purple)',
-          }
-        }}>
-        Speed Up Brewing (Click)
-      </Button>
+      <Typography variant="h4" gutterBottom>Potion Brewer</Typography>
+      <Typography>Potions: {potions}</Typography>
+      <Typography>Funds: ${funds.toFixed(2)}</Typography>
+      <Typography>Inventory: {inventory}</Typography>
+      <Typography>Price per Potion: ${pricePerPotion.toFixed(2)}</Typography>
+      <Typography>Demand: {demand}%</Typography>
+      <Typography>Cauldrons: {cauldrons}</Typography>
+      <Typography>Cost to Buy Cauldron: ${cauldronCost}</Typography>
+
+      <Button variant="contained" onClick={makePotion} sx={{ m: 1 }}>Brew Potion</Button>
+      <Button variant="contained" onClick={lowerPrice} sx={{ m: 1 }}>Lower Price</Button>
+      <Button variant="contained" onClick={raisePrice} sx={{ m: 1 }}>Raise Price</Button>
+      <Button variant="contained" onClick={buyCauldron} sx={{ m: 1 }}>Buy Cauldron</Button>
     </Box>
   );
 };
