@@ -57,7 +57,7 @@ const Mascot = () => {
           bottom: '20px',            // 20px from the bottom
           left: '50%',               // Center horizontally
           transform: 'translateX(-50%)', // Center the bar
-          backgroundColor: '#000',   // Black background
+          backgroundColor: 'var(--black)',   // Black background
           color: '#fff',             // White text
           padding: '15px 50px',      // Padding for a big bar feel
           borderRadius: '10px',      // Rounded corners
