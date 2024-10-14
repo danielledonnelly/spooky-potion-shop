@@ -1,28 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 
-const PotionBrewer = ({ potions, funds, onBrew, onSell, cauldrons, setCauldrons }) => {
+const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, setCauldrons }) => {
   const [cauldronCost, setCauldronCost] = useState(20); // Cost of cauldrons
-  const [xp, setXp] = useState(0); // XP system
-  const [level, setLevel] = useState(1); // Player level
-  const [xpToNextLevel, setXpToNextLevel] = useState(100); // XP required for next level
   const [witchCost, setWitchCost] = useState(100); // Cost to hire a witch
   const [witchesHired, setWitchesHired] = useState(0); // Number of witches hired
-
-  // Function to handle leveling up
-  useEffect(() => {
-    if (xp >= xpToNextLevel) {
-      setLevel((prev) => prev + 1); // Increase level
-      setXp(0); // Reset XP
-      setXpToNextLevel((prev) => prev + 50); // Increment XP needed for next level
-    }
-  }, [xp, xpToNextLevel]);
+  const [marketerCost, setMarketerCost] = useState(100); // Cost to hire a marketer
+  const [marketersHired, setMarketersHired] = useState(0); // Number of marketers hired
 
   // Buy more cauldrons
   const buyCauldron = () => {
     if (funds >= cauldronCost) {
       setCauldrons((prev) => prev + 1); // Increase cauldron count
-      onSell(0, cauldronCost); // Deduct the cauldron cost from funds
+      setFunds((prev) => prev - cauldronCost); // Deduct the cauldron cost from funds
       setCauldronCost((prev) => prev + 15); // Make the next cauldron more expensive
     }
   };
@@ -31,8 +21,17 @@ const PotionBrewer = ({ potions, funds, onBrew, onSell, cauldrons, setCauldrons 
   const hireWitch = () => {
     if (funds >= witchCost) {
       setWitchesHired((prev) => prev + 1); // Increase witch count
-      onSell(0, witchCost); // Deduct witch cost from funds
+      setFunds((prev) => prev - witchCost); // Deduct witch cost from funds
       setWitchCost((prev) => prev + 50); // Increase the cost of hiring the next witch
+    }
+  };
+
+  // Hire a marketer
+  const hireMarketer = () => {
+    if (funds >= marketerCost) {
+      setMarketersHired((prev) => prev + 1); // Increase marketer count
+      setFunds((prev) => prev - marketerCost); // Deduct marketer cost from funds
+      setMarketerCost((prev) => prev + 50); // Increase the cost of hiring the next marketer
     }
   };
 
@@ -47,6 +46,20 @@ const PotionBrewer = ({ potions, funds, onBrew, onSell, cauldrons, setCauldrons 
     }
   }, [witchesHired, cauldrons, onBrew]);
 
+  // Automatically sell potions based on cauldrons every 7 seconds if a marketer is hired
+  useEffect(() => {
+    if (marketersHired > 0) {
+      const interval = setInterval(() => {
+        const potionsToSell = Math.min(potions, cauldrons); // Sell only up to the number of cauldrons or available potions
+        if (potionsToSell > 0) {
+          onSell(potionsToSell, 1); // Sell only the number of potions equal to cauldrons
+        }
+      }, 7000);
+
+      return () => clearInterval(interval); // Clear interval on unmount
+    }
+  }, [marketersHired, potions, cauldrons, onSell]);
+
   // Sell all potions
   const sellPotions = () => {
     onSell(potions, 1); // Each potion earns 1 gold
@@ -60,14 +73,14 @@ const PotionBrewer = ({ potions, funds, onBrew, onSell, cauldrons, setCauldrons 
         borderRadius: '10px',
         color: 'white',
         maxWidth: '600px',
-        margin: '0 auto',
+        margin: '-50px auto', // Menu moved up
         display: 'flex',
         gap: '20px',
       }}
     >
       {/* Inventory Section */}
       <Box sx={{ flex: 1 }}>
-        <Typography variant="h6" sx={{ marginBottom: '20px', fontWeight: 'bold', borderBottom: '1px solid #fff' }}>Resources</Typography>
+        <Typography variant="h6" sx={{ marginBottom: '20px', fontWeight: 'bold', borderBottom: '1px solid #fff' }}>Inventory</Typography>
 
         {/* Align labels and values with closer proximity */}
         <Box
@@ -99,13 +112,8 @@ const PotionBrewer = ({ potions, funds, onBrew, onSell, cauldrons, setCauldrons 
           </Box>
 
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Typography sx={{ fontWeight: 'bold' }}>XP</Typography>
-            <Typography>{xp}/{xpToNextLevel}</Typography>
-          </Box>
-
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Typography sx={{ fontWeight: 'bold' }}>Level</Typography>
-            <Typography>{level}</Typography>
+            <Typography sx={{ fontWeight: 'bold' }}>Marketers</Typography>
+            <Typography>{marketersHired}</Typography>
           </Box>
         </Box>
       </Box>
@@ -142,6 +150,16 @@ const PotionBrewer = ({ potions, funds, onBrew, onSell, cauldrons, setCauldrons 
           sx={{ width: '100%', textAlign: 'center', marginBottom: '10px', whiteSpace: 'nowrap' }}
         >
           HIRE WITCH (-${witchCost})
+        </Button>
+
+        {/* Hire Marketer Button */}
+        <Button
+          variant="contained"
+          color="warning"
+          onClick={hireMarketer}
+          sx={{ width: '100%', textAlign: 'center', marginBottom: '10px', whiteSpace: 'nowrap' }}
+        >
+          HIRE MARKETER (-${marketerCost})
         </Button>
       </Box>
     </Box>

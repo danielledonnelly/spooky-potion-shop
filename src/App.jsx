@@ -20,8 +20,8 @@ function App() {
 
   // Function to handle selling potions
   const handleSell = (potionCount, pricePerPotion) => {
-    setFunds((prev) => prev + potionCount * pricePerPotion);
-    setPotions(0); // Reset potions after selling
+    setFunds((prev) => prev + potionCount * pricePerPotion); // Add to funds
+    setPotions((prev) => Math.max(prev - potionCount, 0)); // Decrease potions by the number sold
   };
 
   return (
@@ -34,6 +34,7 @@ function App() {
         <PotionBrewer
           potions={potions}
           funds={funds}
+          setFunds={setFunds}  // <---- Pass setFunds here
           onBrew={handleBrew} // Brew potions dynamically based on cauldron count
           onSell={handleSell}
           cauldrons={cauldrons}
