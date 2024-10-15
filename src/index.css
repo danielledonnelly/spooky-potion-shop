@@ -19,6 +19,7 @@
   --dark-purple: #4B007D;
   --purple: #7000FF;
   --light-purple: #B47FFF;
+  --label-purple: #D58BFF;
 }
 
 body {
@@ -36,14 +37,45 @@ body {
 }
 
 button {
-  border: 2px solid var(--dark-green);
   padding: 10px;
   cursor: pointer;
+  color: var(--white); /* Ensures text is always visible */
 }
 
-button:hover {
+button.sell-potions {
+  background-color: var(--yellow);
+  border: 2px solid var(--dark-grey);
+}
+
+button.sell-potions:hover {
+  background-color: var(--dark-orange); /* Optional hover state */
+}
+
+button.buy-cauldron {
+  background-color: var(--orange);
+  border: 2px solid var(--dark-orange);
+}
+
+button.buy-cauldron:hover {
+  background-color: var(--light-orange);
+}
+
+button.hire-witch {
+  background-color: var(--green);
+  border: 2px solid var(--dark-green);
+}
+
+button.hire-witch:hover {
   background-color: var(--light-green);
-  border-color: var(--green);
+}
+
+button.hire-marketer {
+  background-color: var(--dark-purple);
+  border: 2px solid var(--purple);
+}
+
+button.hire-marketer:hover {
+  background-color: var(--light-purple);
 }
 
 h1 {
@@ -52,17 +84,6 @@ h1 {
 
 h2 {
   color: var(--purple);
-}
-
-.card {
-  background-color: var(--black);
-  border: 1px solid var(--medium-grey);
-  padding: 20px;
-  border-radius: 10px;
-}
-
-.card:hover {
-  background-color: var(--light-grey);
 }
 
 .icon {
@@ -79,36 +100,6 @@ h2 {
   top: 65%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
-
-.ingredient-button {
-  background-color: transparent !important;
-  border: none;
-  cursor: pointer;
-  outline: none;
-  transition: transform 0.2s ease-in-out;
-}
-
-.ingredient-button img {
-  width: 80px;
-  height: 80px;
-  background-color: transparent !important;
-}
-
-.ingredient-button:hover img {
-  transform: scale(1.2); 
-}
-
-.ingredient-button:focus {
-  outline: none;
-}
-
-.selected-ingredients {
-  position: absolute;
-  bottom: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
 }
 
 .selected-ingredients ul {
@@ -137,16 +128,50 @@ h2 {
   height: 450px;
 }
 
-.bookshelf-button {
-  position: absolute !important;
-  top: 200px;              
-  right: 20px;         
-  transform: none;        
+/* Potion Brewer Styles */
+.potion-brewer-container {
+  background-color: transparent;
+  padding: 30px;
+  border-radius: 10px;
+  color: var(--white);
+  max-width: 900px;
+  margin: -200px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
-.bookshelf-image {
-  width: 420px;
-  height: 420px;
-  cursor: pointer;
+.potion-brewer-sections {
+  display: flex;
+  width: 100%;
+  gap: 20px;
 }
 
+.section-box {
+  flex: 1;
+  padding: 20px;
+  /* Removed the border */
+  border-radius: 8px;
+}
+
+.section-label {
+  font-weight: bold;
+  color: var(--label-purple); /* Lighter text */
+  text-shadow: 0px 0px 5px var(--black); /* Subtle text shadow for pop */
+  padding: 10px 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.section-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.help-icon {
+  font-size: 16px;
+  color: grey;
+  margin-right: 1px;
+}

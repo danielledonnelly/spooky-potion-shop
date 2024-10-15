@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Typography, Tooltip } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'; // Import HelpOutline Icon
+import shopSign from '../assets/shop-sign.png'; // Import shop sign image
 
 const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, setCauldrons }) => {
   const [cauldronCost, setCauldronCost] = useState(20); // Cost of cauldrons
@@ -8,6 +9,9 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
   const [witchesHired, setWitchesHired] = useState(0); // Number of witches hired
   const [marketerCost, setMarketerCost] = useState(100); // Cost to hire a marketer
   const [marketersHired, setMarketersHired] = useState(0); // Number of marketers hired
+  const [potionsBrewed, setPotionsBrewed] = useState(0); // Track the number of potions brewed
+  const [potionsSold, setPotionsSold] = useState(0); // Track the number of potions sold
+  const [reputation, setReputation] = useState(50); // Track shop reputation
 
   // Buy more cauldrons
   const buyCauldron = () => {
@@ -41,6 +45,7 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
     if (witchesHired > 0) {
       const interval = setInterval(() => {
         onBrew(cauldrons); // Add potions based on the number of cauldrons
+        setPotionsBrewed((prev) => prev + cauldrons); // Track potions brewed
       }, 7000);
 
       return () => clearInterval(interval); // Clear interval on unmount
@@ -54,6 +59,7 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
         const potionsToSell = Math.min(potions, cauldrons); // Sell only up to the number of cauldrons or available potions
         if (potionsToSell > 0) {
           onSell(potionsToSell, 1); // Sell only the number of potions equal to cauldrons
+          setPotionsSold((prev) => prev + potionsToSell); // Track potions sold
         }
       }, 7000);
 
@@ -61,135 +67,133 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
     }
   }, [marketersHired, potions, cauldrons, onSell]);
 
-  // Sell all potions
+  // Sell all potions manually
   const sellPotions = () => {
     onSell(potions, 1); // Each potion earns 1 gold
+    setPotionsSold((prev) => prev + potions); // Track potions sold
   };
 
   return (
-    <Box
-      sx={{
-        backgroundColor: '#222',
-        padding: '20px',
-        borderRadius: '10px',
-        color: 'white',
-        maxWidth: '600px',
-        margin: '-50px auto', // Menu moved up
-        display: 'flex',
-        gap: '20px',
-      }}
-    >
-      {/* Inventory Section */}
-      <Box sx={{ flex: 1 }}>
-        <Typography variant="h6" sx={{ marginBottom: '20px', fontWeight: 'bold', borderBottom: '1px solid #fff' }}>Inventory</Typography>
+    <Box className="potion-brewer-container">
+      {/* Shop Sign Image */}
+      <Box component="img" src={shopSign} alt="Shop Sign" sx={{ width: '100%', maxWidth: '700px', marginBottom: '5px' }} />
 
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '10px',
-          }}
-        >
-          {/* Potions with Tooltip */}
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Tooltip title="Potions can be brewed manually by clicking the cauldron, or automatically by hiring a witch." placement="top">
-                <HelpOutlineIcon sx={{ fontSize: '16px', color: 'grey', mr: 1 }} />
-              </Tooltip>
-              <Typography sx={{ fontWeight: 'bold' }}>Potions</Typography>
+      {/* Resources, Actions, and Stats Sections Side-by-Side */}
+      <Box className="potion-brewer-sections">
+        {/* Resources Section */}
+        <Box className="section-box">
+          <Typography variant="h6" className="section-label">Resources</Typography>
+          <Box>
+            <Box className="section-item">
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Tooltip title="Potions can be brewed manually by clicking the cauldron, or automatically by hiring a witch." placement="top">
+                  <HelpOutlineIcon className="help-icon" />
+                </Tooltip>
+                <Typography sx={{ fontWeight: 'bold' }}>Potions</Typography>
+              </Box>
+              <Typography>{potions}</Typography>
             </Box>
-            <Typography>{potions}</Typography>
-          </Box>
 
-          {/* Gold with Tooltip */}
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Tooltip title="Gold can be earned manually by selling all your potion stock, or automatically by hiring a marketer." placement="top">
-                <HelpOutlineIcon sx={{ fontSize: '16px', color: 'grey', mr: 1 }} />
-              </Tooltip>
-              <Typography sx={{ fontWeight: 'bold' }}>Gold</Typography>
+            <Box className="section-item">
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Tooltip title="Gold can be earned manually by selling all your potion stock, or automatically by hiring a marketer." placement="top">
+                  <HelpOutlineIcon className="help-icon" />
+                </Tooltip>
+                <Typography sx={{ fontWeight: 'bold' }}>Gold</Typography>
+              </Box>
+              <Typography>{funds}</Typography>
             </Box>
-            <Typography>{funds}</Typography>
-          </Box>
 
-          {/* Cauldrons with Tooltip */}
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Tooltip title="The number of cauldrons represents how many potions are produced per batch." placement="top">
-                <HelpOutlineIcon sx={{ fontSize: '16px', color: 'grey', mr: 1 }} />
-              </Tooltip>
-              <Typography sx={{ fontWeight: 'bold' }}>Cauldrons</Typography>
+            <Box className="section-item">
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Tooltip title="The number of cauldrons represents how many potions are produced per batch." placement="top">
+                  <HelpOutlineIcon className="help-icon" />
+                </Tooltip>
+                <Typography sx={{ fontWeight: 'bold' }}>Cauldrons</Typography>
+              </Box>
+              <Typography>{cauldrons}</Typography>
             </Box>
-            <Typography>{cauldrons}</Typography>
-          </Box>
 
-          {/* Witches with Tooltip */}
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Tooltip title="Witches produce potions every 7 seconds based on the number of cauldrons." placement="top">
-                <HelpOutlineIcon sx={{ fontSize: '16px', color: 'grey', mr: 1 }} />
-              </Tooltip>
-              <Typography sx={{ fontWeight: 'bold' }}>Witches</Typography>
+            <Box className="section-item">
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Tooltip title="Witches produce potions every 7 seconds based on the number of cauldrons." placement="top">
+                  <HelpOutlineIcon className="help-icon" />
+                </Tooltip>
+                <Typography sx={{ fontWeight: 'bold' }}>Witches</Typography>
+              </Box>
+              <Typography>{witchesHired}</Typography>
             </Box>
-            <Typography>{witchesHired}</Typography>
-          </Box>
 
-          {/* Marketers with Tooltip */}
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Tooltip title="Marketers sell potions every 7 seconds based on the number of cauldrons." placement="top">
-                <HelpOutlineIcon sx={{ fontSize: '16px', color: 'grey', mr: 1 }} />
-              </Tooltip>
-              <Typography sx={{ fontWeight: 'bold' }}>Marketers</Typography>
+            <Box className="section-item">
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Tooltip title="Marketers sell potions every 7 seconds based on the number of cauldrons." placement="top">
+                  <HelpOutlineIcon className="help-icon" />
+                </Tooltip>
+                <Typography sx={{ fontWeight: 'bold' }}>Marketers</Typography>
+              </Box>
+              <Typography>{marketersHired}</Typography>
             </Box>
-            <Typography>{marketersHired}</Typography>
           </Box>
         </Box>
-      </Box>
 
-      {/* Actions Section */}
-      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-        <Typography variant="h6" sx={{ marginBottom: '20px', fontWeight: 'bold', borderBottom: '1px solid #fff' }}>Actions</Typography>
+        {/* Actions Section */}
+        <Box className="section-box">
+          <Typography variant="h6" className="section-label">Actions</Typography>
 
-        {/* Sell Potions Button */}
-        <Button
-          variant="contained"
-          color="success"
-          onClick={sellPotions}
-          sx={{ width: '100%', textAlign: 'center', marginBottom: '10px', whiteSpace: 'nowrap', py: 0.5, fontSize: '0.875rem' }}
-        >
-          SELL POTIONS (+${potions * 1})
-        </Button>
+          <Button
+            className="sell-potions"
+            onClick={sellPotions}
+            sx={{ width: '100%', textAlign: 'center', marginBottom: '10px', whiteSpace: 'nowrap', py: 0.5, fontSize: '0.875rem' }}
+          >
+            SELL POTIONS (+${potions * 1})
+          </Button>
 
-        {/* Buy Cauldron Button */}
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={buyCauldron}
-          sx={{ width: '100%', textAlign: 'center', marginBottom: '10px', whiteSpace: 'nowrap', py: 0.5, fontSize: '0.875rem' }}
-        >
-          BUY CAULDRON (-${cauldronCost})
-        </Button>
+          <Button
+            className="buy-cauldron"
+            onClick={buyCauldron}
+            sx={{ width: '100%', textAlign: 'center', marginBottom: '10px', whiteSpace: 'nowrap', py: 0.5, fontSize: '0.875rem' }}
+          >
+            BUY CAULDRON (-${cauldronCost})
+          </Button>
 
-        {/* Hire Witch Button */}
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={hireWitch}
-          sx={{ width: '100%', textAlign: 'center', marginBottom: '10px', whiteSpace: 'nowrap', py: 0.5, fontSize: '0.875rem' }}
-        >
-          HIRE WITCH (-${witchCost})
-        </Button>
+          <Button
+            className="hire-witch"
+            onClick={hireWitch}
+            sx={{ width: '100%', textAlign: 'center', marginBottom: '10px', whiteSpace: 'nowrap', py: 0.5, fontSize: '0.875rem' }}
+          >
+            HIRE WITCH (-${witchCost})
+          </Button>
 
-        {/* Hire Marketer Button */}
-        <Button
-          variant="contained"
-          color="warning"
-          onClick={hireMarketer}
-          sx={{ width: '100%', textAlign: 'center', marginBottom: '10px', whiteSpace: 'nowrap', py: 0.5, fontSize: '0.875rem' }}
-        >
-          HIRE MARKETER (-${marketerCost})
-        </Button>
+          <Button
+            className="hire-marketer"
+            onClick={hireMarketer}
+            sx={{ width: '100%', textAlign: 'center', marginBottom: '10px', whiteSpace: 'nowrap', py: 0.5, fontSize: '0.875rem' }}
+          >
+            HIRE MARKETER (-${marketerCost})
+          </Button>
+        </Box>
+
+        {/* Stats Section */}
+        <Box className="section-box">
+          <Typography variant="h6" className="section-label">Stats</Typography>
+
+          <Box>
+            <Box className="section-item">
+              <Typography sx={{ fontWeight: 'bold' }}>Potions Brewed</Typography>
+              <Typography>{potionsBrewed}</Typography>
+            </Box>
+
+            <Box className="section-item">
+              <Typography sx={{ fontWeight: 'bold' }}>Potions Sold</Typography>
+              <Typography>{potionsSold}</Typography>
+            </Box>
+
+            <Box className="section-item">
+              <Typography sx={{ fontWeight: 'bold' }}>Shop Reputation</Typography>
+              <Typography>{reputation}</Typography>
+            </Box>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
