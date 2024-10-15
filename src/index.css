@@ -36,47 +36,73 @@ body {
   overflow: hidden;
 }
 
+/* General Button Styles */
 button {
-  padding: 10px;
-  cursor: pointer;
-  color: var(--white); /* Ensures text is always visible */
+  color: white !important; /* White text */
+  font-weight: bolder !important; /* Make the text bold */
+  border: none; /* Remove default border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 2px 14px !important; /* Adjust padding for better spacing */
+  font-size: 16px; /* Adjust font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: all 0.4s ease; /* Smooth transition for hover effects */
+  outline: none; /* Remove focus outline */
 }
 
+/* Sell Potions Button - Neon Green (switched) */
 button.sell-potions {
-  background-color: var(--yellow);
-  border: 2px solid var(--dark-grey);
+  background: linear-gradient(135deg, #00ff99, #00cc66); /* Neon green gradient */
+  box-shadow: 0 0 15px rgba(0, 255, 150, 0.4), 0 0 30px rgba(0, 255, 150, 0.2); /* Green glow */
 }
 
 button.sell-potions:hover {
-  background-color: var(--dark-orange); /* Optional hover state */
+  background: linear-gradient(135deg, #00ffcc, #00e699); /* Brighter green gradient */
+  box-shadow: 0 0 20px rgba(0, 255, 170, 0.8), 0 0 40px rgba(0, 255, 170, 0.6); /* Enhanced green glow */
+  transform: scale(1.05); /* Slightly enlarge on hover */
 }
 
+/* Buy Cauldron Button - Neon Blue (switched) */
 button.buy-cauldron {
-  background-color: var(--orange);
-  border: 2px solid var(--dark-orange);
+  background: linear-gradient(135deg, #00c6ff, #0072ff); /* Neon blue gradient */
+  box-shadow: 0 0 15px rgba(0, 150, 255, 0.4), 0 0 30px rgba(0, 150, 255, 0.2); /* Blue glow */
 }
 
 button.buy-cauldron:hover {
-  background-color: var(--light-orange);
+  background: linear-gradient(135deg, #00e5ff, #0085ff); /* Brighter blue gradient */
+  box-shadow: 0 0 20px rgba(0, 200, 255, 0.8), 0 0 40px rgba(0, 200, 255, 0.6); /* Enhanced blue glow */
+  transform: scale(1.05);
 }
 
+/* Hire Witch Button - Neon Purple */
 button.hire-witch {
-  background-color: var(--green);
-  border: 2px solid var(--dark-green);
+  background: linear-gradient(135deg, #cc00ff, #9900cc); /* Neon purple gradient */
+  box-shadow: 0 0 15px rgba(200, 0, 255, 0.4), 0 0 30px rgba(200, 0, 255, 0.2); /* Purple glow */
 }
 
 button.hire-witch:hover {
-  background-color: var(--light-green);
+  background: linear-gradient(135deg, #e500ff, #b300cc); /* Brighter purple gradient */
+  box-shadow: 0 0 20px rgba(230, 0, 255, 0.8), 0 0 40px rgba(230, 0, 255, 0.6); /* Enhanced purple glow */
+  transform: scale(1.05);
 }
 
+/* Hire Marketer Button - Neon Pink */
 button.hire-marketer {
-  background-color: var(--dark-purple);
-  border: 2px solid var(--purple);
+  background: linear-gradient(135deg, #ff0066, #cc0052); /* Neon pink gradient */
+  box-shadow: 0 0 15px rgba(255, 0, 100, 0.4), 0 0 30px rgba(255, 0, 100, 0.2); /* Pink glow */
 }
 
 button.hire-marketer:hover {
-  background-color: var(--light-purple);
+  background: linear-gradient(135deg, #ff3385, #cc3366); /* Brighter pink gradient */
+  box-shadow: 0 0 20px rgba(255, 0, 120, 0.8), 0 0 40px rgba(255, 0, 120, 0.6); /* Enhanced pink glow */
+  transform: scale(1.05);
 }
+
+/* Button Active State for All */
+button:active {
+  transform: scale(0.98); /* Slight shrink on click for feedback */
+}
+
+
 
 h1 {
   color: var(--orange);
