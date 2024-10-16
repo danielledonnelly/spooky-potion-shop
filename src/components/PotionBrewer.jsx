@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Button, Typography, Tooltip } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'; // Import HelpOutline Icon
 import shopSign from '../assets/shop-sign.png'; // Import shop sign image
+import StarIcon from '@mui/icons-material/Star'; // Import Star Icon
 
 const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, setCauldrons }) => {
   const [cauldronCost, setCauldronCost] = useState(20); // Cost of cauldrons
@@ -9,9 +10,32 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
   const [witchesHired, setWitchesHired] = useState(0); // Number of witches hired
   const [marketerCost, setMarketerCost] = useState(100); // Cost to hire a marketer
   const [marketersHired, setMarketersHired] = useState(0); // Number of marketers hired
-  const [potionsBrewed, setPotionsBrewed] = useState(0); // Track the number of potions brewed
-  const [potionsSold, setPotionsSold] = useState(0); // Track the number of potions sold
-  const [reputation, setReputation] = useState(50); // Track shop reputation
+  const [reputation, setReputation] = useState(''); // Shop reputation starts blank
+
+useEffect(() => {
+  // Load saved game state from localStorage on initial mount
+  const savedFunds = localStorage.getItem('funds');
+  const savedCauldrons = localStorage.getItem('cauldrons');
+  const savedPotions = localStorage.getItem('potions');
+  const savedWitches = localStorage.getItem('witchesHired');
+  const savedMarketers = localStorage.getItem('marketersHired');
+  
+  if (savedFunds !== null) setFunds(Number(savedFunds));
+  if (savedCauldrons !== null) setCauldrons(Number(savedCauldrons));
+  if (savedPotions !== null) onBrew(Number(savedPotions) - potions); // Adjust potions
+  if (savedWitches !== null) setWitchesHired(Number(savedWitches));
+  if (savedMarketers !== null) setMarketersHired(Number(savedMarketers));
+}, []);
+
+useEffect(() => {
+  // Save game state to localStorage whenever values change
+  localStorage.setItem('funds', funds);
+  localStorage.setItem('cauldrons', cauldrons);
+  localStorage.setItem('potions', potions);
+  localStorage.setItem('witchesHired', witchesHired);
+  localStorage.setItem('marketersHired', marketersHired);
+}, [funds, cauldrons, potions, witchesHired, marketersHired]);
+
 
   // Buy more cauldrons
   const buyCauldron = () => {
@@ -45,7 +69,6 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
     if (witchesHired > 0) {
       const interval = setInterval(() => {
         onBrew(cauldrons); // Add potions based on the number of cauldrons
-        setPotionsBrewed((prev) => prev + cauldrons); // Track potions brewed
       }, 7000);
 
       return () => clearInterval(interval); // Clear interval on unmount
@@ -59,7 +82,6 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
         const potionsToSell = Math.min(potions, cauldrons); // Sell only up to the number of cauldrons or available potions
         if (potionsToSell > 0) {
           onSell(potionsToSell, 1); // Sell only the number of potions equal to cauldrons
-          setPotionsSold((prev) => prev + potionsToSell); // Track potions sold
         }
       }, 7000);
 
@@ -70,7 +92,6 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
   // Sell all potions manually
   const sellPotions = () => {
     onSell(potions, 1); // Each potion earns 1 gold
-    setPotionsSold((prev) => prev + potions); // Track potions sold
   };
 
   return (
@@ -78,7 +99,7 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
       {/* Shop Sign Image */}
       <Box component="img" src={shopSign} alt="Shop Sign" sx={{ width: '100%', maxWidth: '700px', marginBottom: '5px' }} />
 
-      {/* Resources, Actions, and Stats Sections Side-by-Side */}
+      {/* Resources and Actions Sections Side-by-Side */}
       <Box className="potion-brewer-sections">
         {/* Resources Section */}
         <Box className="section-box">
@@ -87,7 +108,7 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
             <Box className="section-item">
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Tooltip title="Potions can be brewed manually by clicking the cauldron, or automatically by hiring a witch." placement="top">
-                  <HelpOutlineIcon className="help-icon" />
+                  <HelpOutlineIcon className="help-icon" sx={{ fontSize: '14px', marginRight: '6px' }} /> {/* Increased space between icon and text */}
                 </Tooltip>
                 <Typography sx={{ fontWeight: 'bold' }}>Potions</Typography>
               </Box>
@@ -97,7 +118,7 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
             <Box className="section-item">
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Tooltip title="Gold can be earned manually by selling all your potion stock, or automatically by hiring a marketer." placement="top">
-                  <HelpOutlineIcon className="help-icon" />
+                  <HelpOutlineIcon className="help-icon" sx={{ fontSize: '14px', marginRight: '6px' }} /> {/* Increased space between icon and text */}
                 </Tooltip>
                 <Typography sx={{ fontWeight: 'bold' }}>Gold</Typography>
               </Box>
@@ -107,7 +128,7 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
             <Box className="section-item">
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Tooltip title="The number of cauldrons represents how many potions are produced per batch." placement="top">
-                  <HelpOutlineIcon className="help-icon" />
+                  <HelpOutlineIcon className="help-icon" sx={{ fontSize: '14px', marginRight: '6px' }} /> {/* Increased space between icon and text */}
                 </Tooltip>
                 <Typography sx={{ fontWeight: 'bold' }}>Cauldrons</Typography>
               </Box>
@@ -117,7 +138,7 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
             <Box className="section-item">
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Tooltip title="Witches produce potions every 7 seconds based on the number of cauldrons." placement="top">
-                  <HelpOutlineIcon className="help-icon" />
+                  <HelpOutlineIcon className="help-icon" sx={{ fontSize: '14px', marginRight: '6px' }} /> {/* Increased space between icon and text */}
                 </Tooltip>
                 <Typography sx={{ fontWeight: 'bold' }}>Witches</Typography>
               </Box>
@@ -127,11 +148,33 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
             <Box className="section-item">
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Tooltip title="Marketers sell potions every 7 seconds based on the number of cauldrons." placement="top">
-                  <HelpOutlineIcon className="help-icon" />
+                  <HelpOutlineIcon className="help-icon" sx={{ fontSize: '14px', marginRight: '6px' }} /> {/* Increased space between icon and text */}
                 </Tooltip>
                 <Typography sx={{ fontWeight: 'bold' }}>Marketers</Typography>
               </Box>
               <Typography>{marketersHired}</Typography>
+            </Box>
+
+            {/* Shop Reputation Section with Tooltip */}
+            <Box className="section-item">
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Tooltip title="Grow your business to grow your reputation" placement="top">
+                  <HelpOutlineIcon className="help-icon" sx={{ fontSize: '14px', marginRight: '6px' }} /> {/* Increased space between icon and text */}
+                </Tooltip>
+                <Typography sx={{ fontWeight: 'bold' }}>Shop Reputation</Typography>
+              </Box>
+              <Box>
+                {/* Display stars for reputation, default is blank */}
+                {reputation === '' ? (
+                  <Typography sx={{ color: 'grey' }}>⭐</Typography>
+                ) : (
+                  Array(reputation)
+                    .fill(null)
+                    .map((_, index) => (
+                      <StarIcon key={index} sx={{ fontSize: '18px', color: 'gold' }} />
+                    ))
+                )}
+              </Box>
             </Box>
           </Box>
         </Box>
@@ -171,28 +214,6 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
           >
             HIRE MARKETER (-${marketerCost})
           </Button>
-        </Box>
-
-        {/* Stats Section */}
-        <Box className="section-box">
-          <Typography variant="h6" className="section-label">Stats</Typography>
-
-          <Box>
-            <Box className="section-item">
-              <Typography sx={{ fontWeight: 'bold' }}>Potions Brewed</Typography>
-              <Typography>{potionsBrewed}</Typography>
-            </Box>
-
-            <Box className="section-item">
-              <Typography sx={{ fontWeight: 'bold' }}>Potions Sold</Typography>
-              <Typography>{potionsSold}</Typography>
-            </Box>
-
-            <Box className="section-item">
-              <Typography sx={{ fontWeight: 'bold' }}>Shop Reputation</Typography>
-              <Typography>{reputation}</Typography>
-            </Box>
-          </Box>
         </Box>
       </Box>
     </Box>
