@@ -7,7 +7,7 @@ import cauldronClickSound from './assets/cauldron-click.wav'; // Cauldron click 
 import Mascot from './components/Mascot';
 import PotionBrewer from './components/PotionBrewer';
 import cauldronImage from './assets/cauldron.png';
-import '../index.css';
+import './index.css';
 
 function App() {
   const [potions, setPotions] = useState(0); // Track potion count
