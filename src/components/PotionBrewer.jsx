@@ -13,7 +13,23 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
   const [marketersHired, setMarketersHired] = useState(0); // Number of marketers hired
   const [reputation, setReputation] = useState(''); // Shop reputation starts blank
 
-useEffect(() => {
+  useEffect(() => {
+    // Save game state to localStorage whenever values change
+    console.log('Saving to localStorage:');
+    console.log('Funds:', funds);
+    console.log('Cauldrons:', cauldrons);
+    console.log('Potions:', potions);
+    console.log('Witches Hired:', witchesHired);
+    console.log('Marketers Hired:', marketersHired);
+    
+    localStorage.setItem('funds', funds);
+    localStorage.setItem('cauldrons', cauldrons);
+    localStorage.setItem('potions', potions);
+    localStorage.setItem('witchesHired', witchesHired);
+    localStorage.setItem('marketersHired', marketersHired);
+  }, [funds, cauldrons, potions, witchesHired, marketersHired]);
+
+  useEffect(() => {
   // Load saved game state from localStorage on initial mount
   const savedFunds = localStorage.getItem('funds');
   const savedCauldrons = localStorage.getItem('cauldrons');
@@ -21,22 +37,12 @@ useEffect(() => {
   const savedWitches = localStorage.getItem('witchesHired');
   const savedMarketers = localStorage.getItem('marketersHired');
   
-  if (savedFunds !== null) setFunds(Number(savedFunds));
-  if (savedCauldrons !== null) setCauldrons(Number(savedCauldrons));
-  if (savedPotions !== null) onBrew(Number(savedPotions) - potions); // Adjust potions
-  if (savedWitches !== null) setWitchesHired(Number(savedWitches));
-  if (savedMarketers !== null) setMarketersHired(Number(savedMarketers));
+  // if (savedFunds !== null) setFunds(Number(savedFunds));
+  // if (savedCauldrons !== null) setCauldrons(Number(savedCauldrons));
+  // if (savedPotions !== null) setPotions(Number(savedPotions));
+  // if (savedWitches !== null) setWitchesHired(Number(savedWitches));
+  // if (savedMarketers !== null) setMarketersHired(Number(savedMarketers));
 }, []);
-
-useEffect(() => {
-  // Save game state to localStorage whenever values change
-  localStorage.setItem('funds', funds);
-  localStorage.setItem('cauldrons', cauldrons);
-  localStorage.setItem('potions', potions);
-  localStorage.setItem('witchesHired', witchesHired);
-  localStorage.setItem('marketersHired', marketersHired);
-}, [funds, cauldrons, potions, witchesHired, marketersHired]);
-
 
   // Buy more cauldrons
   const buyCauldron = () => {
