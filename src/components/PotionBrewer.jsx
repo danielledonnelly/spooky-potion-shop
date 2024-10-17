@@ -3,6 +3,7 @@ import { Box, Button, Typography, Tooltip } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'; // Import HelpOutline Icon
 import shopSign from '../assets/shop-sign.png'; // Import shop sign image
 import StarIcon from '@mui/icons-material/Star'; // Import Star Icon
+import '../index.css';
 
 const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, setCauldrons }) => {
   const [cauldronCost, setCauldronCost] = useState(20); // Cost of cauldrons
