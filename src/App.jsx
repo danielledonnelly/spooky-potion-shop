@@ -16,24 +16,6 @@ function App() {
   const [cauldrons, setCauldrons] = useState(1); // Track cauldron count
   const [isSoundEnabled, setIsSoundEnabled] = useState(true); // Track sound state (music + sound effects)
 
-  // Load saved game state from localStorage
-  useEffect(() => {
-    const savedFunds = localStorage.getItem('funds');
-    const savedCauldrons = localStorage.getItem('cauldrons');
-    const savedPotions = localStorage.getItem('potions');
-    
-    if (savedFunds !== null) setFunds(Number(savedFunds));
-    if (savedCauldrons !== null) setCauldrons(Number(savedCauldrons));
-    if (savedPotions !== null) setPotions(Number(savedPotions));
-  }, []);
-
-  // Save game state to localStorage whenever values change
-  useEffect(() => {
-    localStorage.setItem('funds', funds);
-    localStorage.setItem('cauldrons', cauldrons);
-    localStorage.setItem('potions', potions);
-  }, [funds, cauldrons, potions]);
-
   // Sound control logic
   const audioRef = useRef(null); // Background music reference
   const cauldronClickRef = useRef(null); // Cauldron click sound reference

@@ -1,11 +1,8 @@
-// Happy Halloween!
-
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Typography, Tooltip } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'; // Import HelpOutline Icon
 import shopSign from '../assets/shop-sign.png'; // Import shop sign image
 import StarIcon from '@mui/icons-material/Star'; // Import Star Icon
-import '../index.css';
 
 const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, setCauldrons }) => {
   const [cauldronCost, setCauldronCost] = useState(20); // Cost of cauldrons
@@ -13,38 +10,7 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
   const [witchesHired, setWitchesHired] = useState(0); // Number of witches hired
   const [marketerCost, setMarketerCost] = useState(100); // Cost to hire a marketer
   const [marketersHired, setMarketersHired] = useState(0); // Number of marketers hired
-  const [reputation, setReputation] = useState(''); // Shop reputation starts blank    (feature not yet added)
-
-  useEffect(() => {
-    // Save game state to localStorage whenever values change
-    console.log('Saving to localStorage:');
-    console.log('Funds:', funds);
-    console.log('Cauldrons:', cauldrons);
-    console.log('Potions:', potions);
-    console.log('Witches Hired:', witchesHired);
-    console.log('Marketers Hired:', marketersHired);
-    
-    localStorage.setItem('funds', funds);
-    localStorage.setItem('cauldrons', cauldrons);
-    localStorage.setItem('potions', potions);
-    localStorage.setItem('witchesHired', witchesHired);
-    localStorage.setItem('marketersHired', marketersHired);
-  }, [funds, cauldrons, potions, witchesHired, marketersHired]);
-
-  useEffect(() => {
-  // Load saved game state from localStorage on initial mount
-  const savedFunds = localStorage.getItem('funds');
-  const savedCauldrons = localStorage.getItem('cauldrons');
-  const savedPotions = localStorage.getItem('potions');
-  const savedWitches = localStorage.getItem('witchesHired');
-  const savedMarketers = localStorage.getItem('marketersHired');
-  
-  // if (savedFunds !== null) setFunds(Number(savedFunds));
-  // if (savedCauldrons !== null) setCauldrons(Number(savedCauldrons));
-  // if (savedPotions !== null) setPotions(Number(savedPotions));
-  // if (savedWitches !== null) setWitchesHired(Number(savedWitches));
-  // if (savedMarketers !== null) setMarketersHired(Number(savedMarketers));
-}, []);
+  const [reputation, setReputation] = useState(''); // Shop reputation starts blank
 
   // Buy more cauldrons
   const buyCauldron = () => {
@@ -175,7 +141,7 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
               <Box>
                 {/* Display stars for reputation, default is blank */}
                 {reputation === '' ? (
-                  <Typography sx={{ color: 'grey' }}>⭐</Typography>
+                  <Typography sx={{ color: 'grey' }}></Typography>
                 ) : (
                   Array(reputation)
                     .fill(null)
