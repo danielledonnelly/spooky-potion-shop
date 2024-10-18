@@ -58,6 +58,7 @@ function App() {
     }
   };
 
+  // Brewing logic
   const handleBrew = () => {
     setPotions((prev) => prev + cauldrons);
     setCauldronSize((prev) => prev + 10);
@@ -69,11 +70,13 @@ function App() {
     }
   };
 
+  // Selling logic
   const handleSell = (potionCount, pricePerPotion) => {
     setFunds((prev) => prev + potionCount * pricePerPotion);
     setPotions((prev) => Math.max(prev - potionCount, 0));
   };
 
+  // App Container
   return (
     <Container sx={{ textAlign: 'center', padding: '20px' }}>
       <Mascot />
@@ -95,6 +98,7 @@ function App() {
         {isSoundEnabled ? <VolumeUpIcon /> : <VolumeOffIcon />}
       </IconButton>
 
+    {/* PotionBrewer Box & PotionBrewer */}
       <Box sx={{ marginTop: '50px' }}>
         <PotionBrewer
           potions={potions}
@@ -108,6 +112,7 @@ function App() {
         />
       </Box>
 
+      {/* Cauldron Box & Cauldron */}
       <Box
         sx={{
           position: 'fixed',

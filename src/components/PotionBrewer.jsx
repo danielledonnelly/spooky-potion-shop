@@ -1,3 +1,5 @@
+// Happy Halloween!
+
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Typography, Tooltip } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'; // Import HelpOutline Icon
@@ -11,7 +13,7 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
   const [witchesHired, setWitchesHired] = useState(0); // Number of witches hired
   const [marketerCost, setMarketerCost] = useState(100); // Cost to hire a marketer
   const [marketersHired, setMarketersHired] = useState(0); // Number of marketers hired
-  const [reputation, setReputation] = useState(''); // Shop reputation starts blank
+  const [reputation, setReputation] = useState(''); // Shop reputation starts blank    (feature not yet added)
 
   useEffect(() => {
     // Save game state to localStorage whenever values change
