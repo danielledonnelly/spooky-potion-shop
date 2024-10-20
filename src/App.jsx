@@ -3,6 +3,7 @@ import { Container, Box, CardMedia, IconButton } from '@mui/material';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
+import MusicOffIcon from '@mui/icons-material/MusicOff'; // Import MusicOffIcon
 import music from './assets/music.mp3';
 import cauldronClickSound from './assets/cauldron-click.wav';
 import Mascot from './components/Mascot';
@@ -87,12 +88,35 @@ function App() {
         <source src={cauldronClickSound} type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
-      <IconButton sx={{ position: 'fixed', top: '10px', right: '50px', color: isMusicEnabled ? 'white' : 'grey', zIndex: 1000 }} onClick={() => setIsMusicEnabled(!isMusicEnabled)}>
-        <MusicNoteIcon />
+
+      {/* Music Toggle Button */}
+      <IconButton
+        sx={{
+          position: 'fixed',
+          top: '10px',
+          right: '50px',
+          color: isMusicEnabled ? 'white' : 'grey',
+          zIndex: 1000,
+        }}
+        onClick={() => setIsMusicEnabled(!isMusicEnabled)}
+      >
+        {isMusicEnabled ? <MusicNoteIcon /> : <MusicOffIcon />} {/* Toggle icon based on music state */}
       </IconButton>
-      <IconButton sx={{ position: 'fixed', top: '10px', right: '10px', color: isSoundEffectsEnabled ? 'white' : 'grey', zIndex: 1000 }} onClick={() => setIsSoundEffectsEnabled(!isSoundEffectsEnabled)}>
-        {isSoundEffectsEnabled ? <VolumeUpIcon /> : <VolumeOffIcon />}
+
+      {/* Sound Effects Toggle Button */}
+      <IconButton
+        sx={{
+          position: 'fixed',
+          top: '10px',
+          right: '10px',
+          color: isSoundEffectsEnabled ? 'white' : 'grey',
+          zIndex: 1000,
+        }}
+        onClick={() => setIsSoundEffectsEnabled(!isSoundEffectsEnabled)}
+      >
+        {isSoundEffectsEnabled ? <VolumeUpIcon /> : <VolumeOffIcon />} {/* Toggle icon based on sound state */}
       </IconButton>
+
       <Box sx={{ marginTop: '50px' }}>
         <PotionBrewer
           potions={potions}
@@ -108,7 +132,16 @@ function App() {
           setMarketersHired={setMarketersHired}
         />
       </Box>
-      <Box sx={{ position: 'fixed', bottom: '100px', left: '50%', transform: 'translateX(-50%)', zIndex: 1000 }}>
+
+      <Box
+        sx={{
+          position: 'fixed',
+          bottom: '100px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 1000,
+        }}
+      >
         <CardMedia
           component="img"
           image={cauldronImage}
