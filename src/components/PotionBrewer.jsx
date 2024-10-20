@@ -47,35 +47,32 @@ const PotionBrewer = ({
     }
   };
 
-  // Automatically increase potions by cauldrons every 7 seconds if a witch is hired
+  // Automatically brew potions every 7 seconds if witches are hired
   useEffect(() => {
     if (witchesHired > 0) {
-      const interval = setInterval(() => {
-        onBrew(cauldrons); // Add potions based on the number of cauldrons
+      const brewInterval = setInterval(() => {
+        console.log("Witch brewing... Current potions:", potions);
+        onBrew(cauldrons); // Brew potions based on the number of cauldrons
       }, 7000);
 
-      return () => clearInterval(interval); // Clear interval on unmount
+      return () => clearInterval(brewInterval); // Clear the interval on unmount
     }
   }, [witchesHired, cauldrons, onBrew]);
 
-  // Automatically sell potions based on cauldrons every 7 seconds if a marketer is hired
+  // Automatically sell potions every 7 seconds if marketers are hired
   useEffect(() => {
     if (marketersHired > 0) {
-      const interval = setInterval(() => {
-        const potionsToSell = Math.min(potions, cauldrons); // Sell only up to the number of cauldrons or available potions
+      const sellInterval = setInterval(() => {
+        const potionsToSell = Math.min(potions, cauldrons); // Sell up to cauldrons or available potions
+        console.log("Marketer selling... Potions to sell:", potionsToSell, " Current potions:", potions);
         if (potionsToSell > 0) {
-          onSell(potionsToSell, 1); // Sell only the number of potions equal to cauldrons
+          onSell(potionsToSell, 1); // Call onSell, which decreases potions and increases funds
         }
       }, 7000);
 
-      return () => clearInterval(interval); // Clear interval on unmount
+      return () => clearInterval(sellInterval); // Clear the interval on unmount
     }
   }, [marketersHired, potions, cauldrons, onSell]);
-
-  // Sell all potions manually
-  const sellPotions = () => {
-    onSell(potions, 1); // Each potion earns 1 gold
-  };
 
   return (
     <Box className="potion-brewer-container">
@@ -146,34 +143,38 @@ const PotionBrewer = ({
 
           <Button
             className="sell-potions"
-            onClick={sellPotions}
-            sx={{ width: '100%', textAlign: 'center', marginBottom: '10px', whiteSpace: 'nowrap', py: 0.5, fontSize: '0.875rem' }}
+            onClick={() => onSell(potions, 1)}
+            sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', whiteSpace: 'nowrap', py: 0.5, fontSize: '0.875rem', width: '100%' }}
           >
-            SELL POTIONS (+${potions * 1})
+            <span>SELL POTIONS</span>
+            <span>+${potions * 1}</span>
           </Button>
 
           <Button
             className="buy-cauldron"
             onClick={buyCauldron}
-            sx={{ width: '100%', textAlign: 'center', marginBottom: '10px', whiteSpace: 'nowrap', py: 0.5, fontSize: '0.875rem' }}
+            sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', whiteSpace: 'nowrap', py: 0.5, fontSize: '0.875rem', width: '100%' }}
           >
-            BUY CAULDRON (-${cauldronCost})
+            <span>BUY CAULDRON</span>
+            <span>-${cauldronCost}</span>
           </Button>
 
           <Button
             className="hire-witch"
             onClick={hireWitch}
-            sx={{ width: '100%', textAlign: 'center', marginBottom: '10px', whiteSpace: 'nowrap', py: 0.5, fontSize: '0.875rem' }}
+            sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', whiteSpace: 'nowrap', py: 0.5, fontSize: '0.875rem', width: '100%' }}
           >
-            HIRE WITCH (-${witchCost})
+            <span>HIRE WITCH</span>
+            <span>-${witchCost}</span>
           </Button>
 
           <Button
             className="hire-marketer"
             onClick={hireMarketer}
-            sx={{ width: '100%', textAlign: 'center', marginBottom: '10px', whiteSpace: 'nowrap', py: 0.5, fontSize: '0.875rem' }}
+            sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', whiteSpace: 'nowrap', py: 0.5, fontSize: '0.875rem', width: '100%' }}
           >
-            HIRE MARKETER (-${marketerCost})
+            <span>HIRE MARKETER</span>
+            <span>-${marketerCost}</span>
           </Button>
         </Box>
       </Box>
