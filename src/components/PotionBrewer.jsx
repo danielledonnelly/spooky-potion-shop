@@ -9,7 +9,6 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
   const [witchesHired, setWitchesHired] = useState(0); // Number of witches hired
   const [marketerCost, setMarketerCost] = useState(100); // Cost to hire a marketer
   const [marketersHired, setMarketersHired] = useState(0); // Number of marketers hired
-  const [reputation, setReputation] = useState(1); // Default one star
 
   // Buy more cauldrons
   const buyCauldron = () => {
@@ -63,13 +62,6 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
     }
   }, [marketersHired, potions, cauldrons, onSell]);
 
-  // Reputation calculation
-  useEffect(() => {
-    const maxReputation = 5;
-    const reputationValue = Math.min(maxReputation, 1 + Math.floor((cauldrons + witchesHired) / 2)); // Start with 1 star
-    setReputation(reputationValue);
-  }, [cauldrons, witchesHired]);
-
   // Sell all potions manually
   const sellPotions = () => {
     onSell(potions, 1); // Each potion earns 1 gold
@@ -89,7 +81,7 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
             <Box className="section-item">
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Tooltip title="Potions can be brewed manually by clicking the cauldron, or automatically by hiring a witch." placement="top">
-                  <HelpOutlineIcon className="help-icon" sx={{ fontSize: '14px', marginRight: '6px' }} /> {/* Increased space between icon and text */}
+                  <HelpOutlineIcon className="help-icon" />
                 </Tooltip>
                 <Typography sx={{ fontWeight: 'bold' }}>Potions</Typography>
               </Box>
@@ -99,7 +91,7 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
             <Box className="section-item">
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Tooltip title="Gold can be earned manually by selling all your potion stock, or automatically by hiring a marketer." placement="top">
-                  <HelpOutlineIcon className="help-icon" sx={{ fontSize: '14px', marginRight: '6px' }} /> {/* Increased space between icon and text */}
+                  <HelpOutlineIcon className="help-icon" />
                 </Tooltip>
                 <Typography sx={{ fontWeight: 'bold' }}>Gold</Typography>
               </Box>
@@ -109,7 +101,7 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
             <Box className="section-item">
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Tooltip title="The number of cauldrons represents how many potions are produced per batch." placement="top">
-                  <HelpOutlineIcon className="help-icon" sx={{ fontSize: '14px', marginRight: '6px' }} /> {/* Increased space between icon and text */}
+                  <HelpOutlineIcon className="help-icon" />
                 </Tooltip>
                 <Typography sx={{ fontWeight: 'bold' }}>Cauldrons</Typography>
               </Box>
@@ -119,7 +111,7 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
             <Box className="section-item">
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Tooltip title="Witches produce potions every 7 seconds based on the number of cauldrons." placement="top">
-                  <HelpOutlineIcon className="help-icon" sx={{ fontSize: '14px', marginRight: '6px' }} /> {/* Increased space between icon and text */}
+                  <HelpOutlineIcon className="help-icon" />
                 </Tooltip>
                 <Typography sx={{ fontWeight: 'bold' }}>Witches</Typography>
               </Box>
@@ -129,25 +121,11 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
             <Box className="section-item">
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Tooltip title="Marketers sell potions every 7 seconds based on the number of cauldrons." placement="top">
-                  <HelpOutlineIcon className="help-icon" sx={{ fontSize: '14px', marginRight: '6px' }} /> {/* Increased space between icon and text */}
+                  <HelpOutlineIcon className="help-icon" />
                 </Tooltip>
                 <Typography sx={{ fontWeight: 'bold' }}>Marketers</Typography>
               </Box>
               <Typography>{marketersHired}</Typography>
-            </Box>
-
-            {/* Shop Reputation Section with Tooltip */}
-            <Box className="section-item">
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Tooltip title="Grow your business to grow your reputation" placement="top">
-                  <HelpOutlineIcon className="help-icon" sx={{ fontSize: '14px', marginRight: '6px' }} /> {/* Increased space between icon and text */}
-                </Tooltip>
-                <Typography sx={{ fontWeight: 'bold' }}>Shop Reputation</Typography>
-              </Box>
-              <Box>
-                {/* Display stars for reputation */}
-                <Typography>{'⭐'.repeat(reputation)}</Typography>
-              </Box>
             </Box>
           </Box>
         </Box>
