@@ -9,58 +9,69 @@ import PotionBrewer from './components/PotionBrewer';
 import cauldronImage from './assets/cauldron.png';
 
 function App() {
-  // Load state from local storage if available
+  // State variables with persistence using localStorage
   const [potions, setPotions] = useState(() => Number(localStorage.getItem('potions')) || 0);
   const [funds, setFunds] = useState(() => Number(localStorage.getItem('funds')) || 0);
-  const [cauldronSize, setCauldronSize] = useState(300);
+  const [cauldronSize, setCauldronSize] = useState(300); // Cauldron size
   const [cauldrons, setCauldrons] = useState(() => Number(localStorage.getItem('cauldrons')) || 1);
-  const [isSoundEnabled, setIsSoundEnabled] = useState(true); // Sound state (music + sound effects)
 
-  // Save state to local storage whenever it changes
-  useEffect(() => {
-    localStorage.setItem('potions', potions);
-    localStorage.setItem('funds', funds);
-    localStorage.setItem('cauldrons', cauldrons);
-  }, [potions, funds, cauldrons]);
+  // State for witches and marketers, also stored in localStorage
+  const [witchesHired, setWitchesHired] = useState(() => Number(localStorage.getItem('witchesHired')) || 0);
+  const [marketersHired, setMarketersHired] = useState(() => Number(localStorage.getItem('marketersHired')) || 0);
+
+  const [isSoundEnabled, setIsSoundEnabled] = useState(true); // Sound state
 
   // References to audio elements
-  const audioRef = useRef(null);
-  const cauldronClickRef = useRef(null);
+  const audioRef = useRef(null); // Background music reference
+  const cauldronClickRef = useRef(null); // Cauldron click sound reference
 
   // Adjust volume and play music when it's ready
   useEffect(() => {
     if (audioRef.current && isSoundEnabled) {
-      audioRef.current.volume = 0.2;
-      audioRef.current.play();
+      audioRef.current.volume = 0.2; // Set volume to 20%
+      audioRef.current.play(); // Ensure the audio plays automatically
     }
   }, [isSoundEnabled]);
 
+  // Persist all state variables in localStorage
+  useEffect(() => {
+    localStorage.setItem('potions', potions);
+    localStorage.setItem('funds', funds);
+    localStorage.setItem('cauldrons', cauldrons);
+    localStorage.setItem('witchesHired', witchesHired);
+    localStorage.setItem('marketersHired', marketersHired);
+  }, [potions, funds, cauldrons, witchesHired, marketersHired]);
+
+  // Toggle sound effects and music on/off
   const toggleSound = () => {
     setIsSoundEnabled(!isSoundEnabled);
 
     if (audioRef.current) {
       if (isSoundEnabled) {
-        audioRef.current.pause();
+        audioRef.current.pause(); // Pause music if currently playing
       } else {
-        audioRef.current.play();
+        audioRef.current.play(); // Play music if currently paused
       }
     }
   };
 
+  // Function to handle potion brewing
   const handleBrew = () => {
-    setPotions((prev) => prev + cauldrons);
-    setCauldronSize((prev) => prev + 10);
-    setTimeout(() => setCauldronSize(300), 200);
+    setPotions((prev) => prev + cauldrons); // Increase potion count by the number of cauldrons owned
+    setCauldronSize((prev) => prev + 10); // Slightly increase the cauldron size
+    setTimeout(() => setCauldronSize(300), 200); // Reset cauldron size after 200ms
 
+    // Play the cauldron click sound if sound is enabled
     if (isSoundEnabled && cauldronClickRef.current) {
-      cauldronClickRef.current.currentTime = 0;
-      cauldronClickRef.current.play();
+      cauldronClickRef.current.currentTime = 0; // Reset the sound to the beginning
+      cauldronClickRef.current.play(); // Play the click sound
     }
   };
 
+  // Function to handle selling potions
   const handleSell = (potionCount, pricePerPotion) => {
-    setFunds((prev) => prev + potionCount * pricePerPotion);
-    setPotions((prev) => Math.max(prev - potionCount, 0));
+    setFunds((prev) => prev + potionCount * pricePerPotion); // Add to funds
+    setPotions((prev) => Math.max(prev - potionCount, 0)); // Decrease potions by the number sold
   };
 
   return (
@@ -69,7 +80,12 @@ function App() {
       <Mascot />
 
       {/* Hidden Audio Elements */}
-      <audio ref={audioRef} loop autoPlay muted={!isSoundEnabled}>
+      <audio
+        ref={audioRef}
+        loop
+        autoPlay
+        muted={!isSoundEnabled} // Mute the audio if sound is disabled
+      >
         <source src={music} type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
@@ -86,12 +102,12 @@ function App() {
           position: 'fixed',
           top: '10px',
           right: '10px',
-          color: isSoundEnabled ? 'white' : 'grey',
+          color: isSoundEnabled ? 'white' : 'grey', // Grey out when sound is off
           zIndex: 1000,
         }}
         onClick={toggleSound}
       >
-        {isSoundEnabled ? <VolumeUpIcon /> : <VolumeOffIcon />}
+        {isSoundEnabled ? <VolumeUpIcon /> : <VolumeOffIcon />} {/* Toggle icon based on sound state */}
       </IconButton>
 
       {/* Move the Potion Brewer (Main Game UI) down */}
@@ -104,6 +120,10 @@ function App() {
           onSell={handleSell}
           cauldrons={cauldrons}
           setCauldrons={setCauldrons}
+          witchesHired={witchesHired}
+          setWitchesHired={setWitchesHired} // Pass to PotionBrewer
+          marketersHired={marketersHired}
+          setMarketersHired={setMarketersHired} // Pass to PotionBrewer
         />
       </Box>
 
@@ -125,7 +145,7 @@ function App() {
             width: cauldronSize,
             height: cauldronSize,
             cursor: 'pointer',
-            transition: 'width 0.2s, height 0.2s',
+            transition: 'width 0.2s, height 0.2s', // Smooth grow when clicked
           }}
           onClick={handleBrew} // Brew potions based on the number of cauldrons
         />

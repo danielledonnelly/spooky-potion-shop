@@ -3,12 +3,22 @@ import { Box, Button, Typography, Tooltip } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'; // Import HelpOutline Icon
 import shopSign from '../assets/shop-sign.png'; // Import shop sign image
 
-const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, setCauldrons }) => {
+const PotionBrewer = ({
+  potions,
+  funds,
+  setFunds,
+  onBrew,
+  onSell,
+  cauldrons,
+  setCauldrons,
+  witchesHired,
+  setWitchesHired,
+  marketersHired,
+  setMarketersHired
+}) => {
   const [cauldronCost, setCauldronCost] = useState(20); // Cost of cauldrons
   const [witchCost, setWitchCost] = useState(100); // Cost to hire a witch
-  const [witchesHired, setWitchesHired] = useState(0); // Number of witches hired
   const [marketerCost, setMarketerCost] = useState(100); // Cost to hire a marketer
-  const [marketersHired, setMarketersHired] = useState(0); // Number of marketers hired
 
   // Buy more cauldrons
   const buyCauldron = () => {
