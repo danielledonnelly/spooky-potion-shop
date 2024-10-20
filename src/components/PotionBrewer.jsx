@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Box, Button, Typography, Tooltip } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'; // Import HelpOutline Icon
 import shopSign from '../assets/shop-sign.png'; // Import shop sign image
-import StarIcon from '@mui/icons-material/Star'; // Import Star Icon
 
 const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, setCauldrons }) => {
   const [cauldronCost, setCauldronCost] = useState(20); // Cost of cauldrons
@@ -10,7 +9,7 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
   const [witchesHired, setWitchesHired] = useState(0); // Number of witches hired
   const [marketerCost, setMarketerCost] = useState(100); // Cost to hire a marketer
   const [marketersHired, setMarketersHired] = useState(0); // Number of marketers hired
-  const [reputation, setReputation] = useState(''); // Shop reputation starts blank
+  const [reputation, setReputation] = useState(1); // Default one star
 
   // Buy more cauldrons
   const buyCauldron = () => {
@@ -63,6 +62,13 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
       return () => clearInterval(interval); // Clear interval on unmount
     }
   }, [marketersHired, potions, cauldrons, onSell]);
+
+  // Reputation calculation
+  useEffect(() => {
+    const maxReputation = 5;
+    const reputationValue = Math.min(maxReputation, 1 + Math.floor((cauldrons + witchesHired) / 2)); // Start with 1 star
+    setReputation(reputationValue);
+  }, [cauldrons, witchesHired]);
 
   // Sell all potions manually
   const sellPotions = () => {
@@ -139,16 +145,8 @@ const PotionBrewer = ({ potions, funds, setFunds, onBrew, onSell, cauldrons, set
                 <Typography sx={{ fontWeight: 'bold' }}>Shop Reputation</Typography>
               </Box>
               <Box>
-                {/* Display stars for reputation, default is blank */}
-                {reputation === '' ? (
-                  <Typography sx={{ color: 'grey' }}></Typography>
-                ) : (
-                  Array(reputation)
-                    .fill(null)
-                    .map((_, index) => (
-                      <StarIcon key={index} sx={{ fontSize: '18px', color: 'gold' }} />
-                    ))
-                )}
+                {/* Display stars for reputation */}
+                <Typography>{'⭐'.repeat(reputation)}</Typography>
               </Box>
             </Box>
           </Box>
