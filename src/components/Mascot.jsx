@@ -20,13 +20,13 @@ const Mascot = () => {
     "Huh, what's that? Oh, you're a human? My mistake! You must be the new manager, then.",
     "My name is Spooky S. Skeleton, and I'm the owner of this shop!",
     "It's nothing special right now, but with your help, this place will be a five-star shop in no time!",
-    "Click the cauldron a few times to brew some potion.",
+    "Click the cauldron a few times to brew some potions.",
     "Then, when you're ready, click the sell potions button.",
     "Each potion sells for one gold! You can use gold to brew potions faster.",
     "Buying a cauldron will increase the number of potions brewed per batch.",
     "If you have ten cauldrons, then every click will brew ten potions!",
     "To speed things up even more and automate the process, you can hire a witch.",
-    "We can get into the details on how that works later.",
+    "We can get into the details on how that works later, but for now...",
     "Get brewing!"
   ];
 
