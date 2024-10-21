@@ -25,7 +25,7 @@ const PotionBrewer = ({
     if (funds >= cauldronCost) {
       setCauldrons((prev) => prev + 1); // Increase cauldron count
       setFunds((prev) => prev - cauldronCost); // Deduct the cauldron cost from funds
-      setCauldronCost((prev) => prev + 15); // Make the next cauldron more expensive
+      setCauldronCost((prev) => Math.floor(prev * 1.5)); // Make the next cauldron more expensive
     }
   };
 
@@ -34,18 +34,18 @@ const PotionBrewer = ({
     if (funds >= witchCost) {
       setWitchesHired((prev) => prev + 1); // Increase witch count
       setFunds((prev) => prev - witchCost); // Deduct witch cost from funds
-      setWitchCost((prev) => prev + 50); // Increase the cost of hiring the next witch
+      setWitchCost((prev) => Math.floor(prev * 2)); // Make the next witch more expensive faster
     }
   };
 
-  // Automatically brew potions every 7 seconds based on witches and cauldrons
+  // Automatically brew potions every 1 second based on witches and cauldrons
   useEffect(() => {
     if (witchesHired > 0) {
       const brewInterval = setInterval(() => {
         const potionsToBrew = witchesHired * cauldrons; // Multiply cauldrons by witches
         console.log("Witches brewing... Potions to brew:", potionsToBrew);
         onBrew(potionsToBrew); // Brew potions based on the number of witches and cauldrons
-      }, 7000);
+      }, 1000); // Brew every 1 second
 
       return () => clearInterval(brewInterval); // Clear the interval on unmount
     }
@@ -109,7 +109,7 @@ const PotionBrewer = ({
 
             <Box className="section-item">
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Tooltip title="Witches brew potions every 7 seconds, multiplied by the number of cauldrons." placement="top">
+                <Tooltip title="Witches brew potions every 1 second, multiplied by the number of cauldrons." placement="top">
                   <HelpOutlineIcon className="help-icon" />
                 </Tooltip>
                 <Typography sx={{ fontWeight: 'bold' }}>Witches</Typography>

@@ -4,6 +4,7 @@ import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import MusicOffIcon from '@mui/icons-material/MusicOff'; // Import MusicOffIcon
+import RestartAltIcon from '@mui/icons-material/RestartAlt'; // Import Restart Icon
 import music from './assets/music.mp3';
 import cauldronClickSound from './assets/cauldron-click.wav';
 import Mascot from './components/Mascot';
@@ -22,6 +23,19 @@ function App() {
 
   const audioRef = useRef(null);
   const cauldronClickRef = useRef(null);
+
+  // Reset game to initial state
+  const resetGame = () => {
+    if (window.confirm("Are you sure you want to restart the game? All progress will be lost!")) {
+      setPotions(0);
+      setFunds(0);
+      setCauldrons(1);
+      setWitchesHired(0);
+      setMarketersHired(0);
+      localStorage.clear(); // Clear localStorage for a fresh start
+      console.log("Game reset!");
+    }
+  };
 
   useEffect(() => {
     if (audioRef.current) {
@@ -61,7 +75,7 @@ function App() {
     }
   };
 
-  // Function to handle selling potions (use functional updates to ensure latest state)
+  // Function to handle selling potions
   const handleSell = (potionCount, pricePerPotion) => {
     setPotions((prevPotions) => {
       const actualPotionsToSell = Math.min(potionCount, prevPotions); // Ensure you can't sell more than you have
@@ -94,7 +108,7 @@ function App() {
         sx={{
           position: 'fixed',
           top: '10px',
-          right: '50px',
+          right: '100px',
           color: isMusicEnabled ? 'white' : 'grey',
           zIndex: 1000,
         }}
@@ -108,13 +122,27 @@ function App() {
         sx={{
           position: 'fixed',
           top: '10px',
-          right: '10px',
+          right: '60px',
           color: isSoundEffectsEnabled ? 'white' : 'grey',
           zIndex: 1000,
         }}
         onClick={() => setIsSoundEffectsEnabled(!isSoundEffectsEnabled)}
       >
         {isSoundEffectsEnabled ? <VolumeUpIcon /> : <VolumeOffIcon />} {/* Toggle icon based on sound state */}
+      </IconButton>
+
+      {/* Reset Game Button */}
+      <IconButton
+        sx={{
+          position: 'fixed',
+          top: '10px',
+          right: '10px',
+          color: 'red',
+          zIndex: 1000,
+        }}
+        onClick={resetGame}
+      >
+        <RestartAltIcon /> {/* Icon for reset/restart */}
       </IconButton>
 
       <Box sx={{ marginTop: '50px' }}>
