@@ -13,12 +13,12 @@ const PotionBrewer = ({
   setCauldrons,
   witchesHired,
   setWitchesHired,
-  marketersHired,
-  setMarketersHired
+  // marketersHired, 
+  // setMarketersHired
 }) => {
   const [cauldronCost, setCauldronCost] = useState(20); // Cost of cauldrons
   const [witchCost, setWitchCost] = useState(100); // Cost to hire a witch
-  const [marketerCost, setMarketerCost] = useState(100); // Cost to hire a marketer
+  // const [marketerCost, setMarketerCost] = useState(100); // Cost to hire a marketer
 
   // Buy more cauldrons
   const buyCauldron = () => {
@@ -38,41 +38,33 @@ const PotionBrewer = ({
     }
   };
 
-  // Hire a marketer
-  const hireMarketer = () => {
-    if (funds >= marketerCost) {
-      setMarketersHired((prev) => prev + 1); // Increase marketer count
-      setFunds((prev) => prev - marketerCost); // Deduct marketer cost from funds
-      setMarketerCost((prev) => prev + 50); // Increase the cost of hiring the next marketer
-    }
-  };
-
-  // Automatically brew potions every 7 seconds if witches are hired
+  // Automatically brew potions every 7 seconds based on witches and cauldrons
   useEffect(() => {
     if (witchesHired > 0) {
       const brewInterval = setInterval(() => {
-        console.log("Witch brewing... Current potions:", potions);
-        onBrew(cauldrons); // Brew potions based on the number of cauldrons
+        const potionsToBrew = witchesHired * cauldrons; // Multiply cauldrons by witches
+        console.log("Witches brewing... Potions to brew:", potionsToBrew);
+        onBrew(potionsToBrew); // Brew potions based on the number of witches and cauldrons
       }, 7000);
 
       return () => clearInterval(brewInterval); // Clear the interval on unmount
     }
   }, [witchesHired, cauldrons, onBrew]);
 
-  // Automatically sell potions every 7 seconds if marketers are hired
-  useEffect(() => {
-    if (marketersHired > 0) {
-      const sellInterval = setInterval(() => {
-        const potionsToSell = Math.min(potions, cauldrons); // Sell up to cauldrons or available potions
-        console.log("Marketer selling... Potions to sell:", potionsToSell, " Current potions:", potions);
-        if (potionsToSell > 0) {
-          onSell(potionsToSell, 1); // Call onSell, which decreases potions and increases funds
-        }
-      }, 7000);
+  // Commented out marketers-related logic
+  // useEffect(() => {
+  //   if (marketersHired > 0) {
+  //     const sellInterval = setInterval(() => {
+  //       const potionsToSell = Math.min(potions, marketersHired); 
+  //       console.log("Marketers selling... Potions to sell:", potionsToSell, " Current potions:", potions);
+  //       if (potionsToSell > 0) {
+  //         onSell(potionsToSell, 1); 
+  //       }
+  //     }, 7000);
 
-      return () => clearInterval(sellInterval); // Clear the interval on unmount
-    }
-  }, [marketersHired, potions, cauldrons, onSell]);
+  //     return () => clearInterval(sellInterval); 
+  //   }
+  // }, [marketersHired, potions, onSell]);
 
   return (
     <Box className="potion-brewer-container">
@@ -97,7 +89,7 @@ const PotionBrewer = ({
 
             <Box className="section-item">
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Tooltip title="Gold can be earned manually by selling all your potion stock, or automatically by hiring a marketer." placement="top">
+                <Tooltip title="Gold can be earned manually by selling all your potion stock." placement="top">
                   <HelpOutlineIcon className="help-icon" />
                 </Tooltip>
                 <Typography sx={{ fontWeight: 'bold' }}>Gold</Typography>
@@ -117,7 +109,7 @@ const PotionBrewer = ({
 
             <Box className="section-item">
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Tooltip title="Witches produce potions every 7 seconds based on the number of cauldrons." placement="top">
+                <Tooltip title="Witches brew potions every 7 seconds, multiplied by the number of cauldrons." placement="top">
                   <HelpOutlineIcon className="help-icon" />
                 </Tooltip>
                 <Typography sx={{ fontWeight: 'bold' }}>Witches</Typography>
@@ -125,15 +117,16 @@ const PotionBrewer = ({
               <Typography>{witchesHired}</Typography>
             </Box>
 
-            <Box className="section-item">
+            {/* Commented out marketers section */}
+            {/* <Box className="section-item">
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Tooltip title="Marketers sell potions every 7 seconds based on the number of cauldrons." placement="top">
+                <Tooltip title="Marketers sell potions every 7 seconds based on the number of marketers." placement="top">
                   <HelpOutlineIcon className="help-icon" />
                 </Tooltip>
                 <Typography sx={{ fontWeight: 'bold' }}>Marketers</Typography>
               </Box>
               <Typography>{marketersHired}</Typography>
-            </Box>
+            </Box> */}
           </Box>
         </Box>
 
@@ -168,14 +161,15 @@ const PotionBrewer = ({
             <span>-${witchCost}</span>
           </Button>
 
-          <Button
+          {/* Commented out marketers button */}
+          {/* <Button
             className="hire-marketer"
             onClick={hireMarketer}
             sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', whiteSpace: 'nowrap', py: 0.5, fontSize: '0.875rem', width: '100%' }}
           >
             <span>HIRE MARKETER</span>
             <span>-${marketerCost}</span>
-          </Button>
+          </Button> */}
         </Box>
       </Box>
     </Box>
