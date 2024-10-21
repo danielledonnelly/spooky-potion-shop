@@ -16,8 +16,8 @@ const PotionBrewer = ({
   // marketersHired, 
   // setMarketersHired
 }) => {
-  const [cauldronCost, setCauldronCost] = useState(20); // Cost of cauldrons
-  const [witchCost, setWitchCost] = useState(100); // Cost to hire a witch
+  const [cauldronCost, setCauldronCost] = useState(75); // Initial cost of cauldrons is 75
+  const [witchCost, setWitchCost] = useState(400); // Initial cost to hire a witch is 400
   // const [marketerCost, setMarketerCost] = useState(100); // Cost to hire a marketer
 
   // Buy more cauldrons
@@ -25,7 +25,7 @@ const PotionBrewer = ({
     if (funds >= cauldronCost) {
       setCauldrons((prev) => prev + 1); // Increase cauldron count
       setFunds((prev) => prev - cauldronCost); // Deduct the cauldron cost from funds
-      setCauldronCost((prev) => Math.floor(prev * 1.5)); // Make the next cauldron more expensive
+      setCauldronCost((prev) => Math.floor(prev * 1.4)); // Moderate price increase for cauldrons
     }
   };
 
@@ -34,7 +34,7 @@ const PotionBrewer = ({
     if (funds >= witchCost) {
       setWitchesHired((prev) => prev + 1); // Increase witch count
       setFunds((prev) => prev - witchCost); // Deduct witch cost from funds
-      setWitchCost((prev) => Math.floor(prev * 2)); // Make the next witch more expensive faster
+      setWitchCost((prev) => Math.floor(prev * 1.6)); // Moderate price increase for witches
     }
   };
 
@@ -51,7 +51,7 @@ const PotionBrewer = ({
     }
   }, [witchesHired, cauldrons, onBrew]);
 
-  // Commented out marketers-related logic
+  // Marketers-related logic (removed for now)
   // useEffect(() => {
   //   if (marketersHired > 0) {
   //     const sellInterval = setInterval(() => {
@@ -117,7 +117,7 @@ const PotionBrewer = ({
               <Typography>{witchesHired}</Typography>
             </Box>
 
-            {/* Commented out marketers section */}
+            {/* Marketers Section (removed for now) */}
             {/* <Box className="section-item">
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Tooltip title="Marketers sell potions every 7 seconds based on the number of marketers." placement="top">
@@ -161,7 +161,7 @@ const PotionBrewer = ({
             <span>-${witchCost}</span>
           </Button>
 
-          {/* Commented out marketers button */}
+          {/* Marketers Button (removed for now) */}
           {/* <Button
             className="hire-marketer"
             onClick={hireMarketer}

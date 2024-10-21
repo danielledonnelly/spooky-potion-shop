@@ -1,3 +1,10 @@
+// Happy Halloween!
+// The direction of this game has changed a few times as I've figured out what I want to do with it.
+// At first, you could hire marketers to auto sell potions. There was also saving implemented using local storage.
+// I quickly realized that I'd rather keep this as a relatively simple minimalist game, the kind you can complete in one sitting.
+// So if you see some commented out logic for features that aren't in the game, that's why.
+// I hope you enjoy playing! Happy brewing!
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Container, Box, CardMedia, IconButton } from '@mui/material';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
@@ -12,14 +19,14 @@ import PotionBrewer from './components/PotionBrewer';
 import cauldronImage from './assets/cauldron.png';
 
 function App() {
-  const [potions, setPotions] = useState(() => Number(localStorage.getItem('potions')) || 0);
-  const [funds, setFunds] = useState(() => Number(localStorage.getItem('funds')) || 0);
-  const [cauldrons, setCauldrons] = useState(() => Number(localStorage.getItem('cauldrons')) || 1);
-  const [witchesHired, setWitchesHired] = useState(() => Number(localStorage.getItem('witchesHired')) || 0);
-  const [marketersHired, setMarketersHired] = useState(() => Number(localStorage.getItem('marketersHired')) || 0);
+  const [potions, setPotions] = useState(0);
+  const [funds, setFunds] = useState(0);
+  const [cauldrons, setCauldrons] = useState(1);
+  const [witchesHired, setWitchesHired] = useState(0);
+  const [marketersHired, setMarketersHired] = useState(0);
   const [cauldronSize, setCauldronSize] = useState(300);
-  const [isMusicEnabled, setIsMusicEnabled] = useState(() => JSON.parse(localStorage.getItem('isMusicEnabled')) ?? true);
-  const [isSoundEffectsEnabled, setIsSoundEffectsEnabled] = useState(() => JSON.parse(localStorage.getItem('isSoundEffectsEnabled')) ?? true);
+  const [isMusicEnabled, setIsMusicEnabled] = useState(true);
+  const [isSoundEffectsEnabled, setIsSoundEffectsEnabled] = useState(true);
 
   const audioRef = useRef(null);
   const cauldronClickRef = useRef(null);
@@ -32,7 +39,8 @@ function App() {
       setCauldrons(1);
       setWitchesHired(0);
       setMarketersHired(0);
-      localStorage.clear(); // Clear localStorage for a fresh start
+      // Commented out clearing localStorage
+      // localStorage.clear(); // Clear localStorage for a fresh start
       console.log("Game reset!");
     }
   };
@@ -48,15 +56,17 @@ function App() {
     }
   }, [isMusicEnabled]);
 
-  useEffect(() => {
-    localStorage.setItem('potions', potions);
-    localStorage.setItem('funds', funds);
-    localStorage.setItem('cauldrons', cauldrons);
-    localStorage.setItem('witchesHired', witchesHired);
-    localStorage.setItem('marketersHired', marketersHired);
-    localStorage.setItem('isMusicEnabled', JSON.stringify(isMusicEnabled));
-    localStorage.setItem('isSoundEffectsEnabled', JSON.stringify(isSoundEffectsEnabled));
-  }, [potions, funds, cauldrons, witchesHired, marketersHired, isMusicEnabled, isSoundEffectsEnabled]);
+  // Saving to localStorage
+  // Removed because I don't want the game to save; reloading should reset everything. This is not a long-term game.
+  // useEffect(() => {
+  //   localStorage.setItem('potions', potions);
+  //   localStorage.setItem('funds', funds);
+  //   localStorage.setItem('cauldrons', cauldrons);
+  //   localStorage.setItem('witchesHired', witchesHired);
+  //   localStorage.setItem('marketersHired', marketersHired);
+  //   localStorage.setItem('isMusicEnabled', JSON.stringify(isMusicEnabled));
+  //   localStorage.setItem('isSoundEffectsEnabled', JSON.stringify(isSoundEffectsEnabled));
+  // }, [potions, funds, cauldrons, witchesHired, marketersHired, isMusicEnabled, isSoundEffectsEnabled]);
 
   // Function to handle potion brewing
   const handleBrew = () => {
