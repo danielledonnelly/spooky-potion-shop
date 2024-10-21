@@ -1,17 +1,10 @@
-// Happy Halloween!
-// The direction of this game has changed a few times as I've figured out what I want to do with it.
-// At first, you could hire marketers to auto sell potions. There was also saving implemented using local storage.
-// I quickly realized that I'd rather keep this as a relatively simple minimalist game, the kind you can complete in one sitting.
-// So if you see some commented out logic for features that aren't in the game, that's why.
-// I hope you enjoy playing! Happy brewing!
-
 import React, { useState, useRef, useEffect } from 'react';
-import { Container, Box, CardMedia, IconButton } from '@mui/material';
+import { Container, Box, CardMedia, IconButton, Dialog, DialogTitle, DialogContent, Typography, Button } from '@mui/material';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
-import MusicOffIcon from '@mui/icons-material/MusicOff'; // Import MusicOffIcon
-import RestartAltIcon from '@mui/icons-material/RestartAlt'; // Import Restart Icon
+import MusicOffIcon from '@mui/icons-material/MusicOff';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline'; // Import Help Icon for "?"
 import music from './assets/music.mp3';
 import cauldronClickSound from './assets/cauldron-click.wav';
 import Mascot from './components/Mascot';
@@ -27,23 +20,14 @@ function App() {
   const [cauldronSize, setCauldronSize] = useState(300);
   const [isMusicEnabled, setIsMusicEnabled] = useState(true);
   const [isSoundEffectsEnabled, setIsSoundEffectsEnabled] = useState(true);
+  const [helpOpen, setHelpOpen] = useState(false); // State to handle help dialog open/close
 
   const audioRef = useRef(null);
   const cauldronClickRef = useRef(null);
 
-  // Reset game to initial state
-  const resetGame = () => {
-    if (window.confirm("Are you sure you want to restart the game? All progress will be lost!")) {
-      setPotions(0);
-      setFunds(0);
-      setCauldrons(1);
-      setWitchesHired(0);
-      setMarketersHired(0);
-      // Commented out clearing localStorage
-      // localStorage.clear(); // Clear localStorage for a fresh start
-      console.log("Game reset!");
-    }
-  };
+  // Handle help dialog open and close
+  const handleHelpOpen = () => setHelpOpen(true);
+  const handleHelpClose = () => setHelpOpen(false);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -55,18 +39,6 @@ function App() {
       }
     }
   }, [isMusicEnabled]);
-
-  // Saving to localStorage
-  // Removed because I don't want the game to save; reloading should reset everything. This is not a long-term game.
-  // useEffect(() => {
-  //   localStorage.setItem('potions', potions);
-  //   localStorage.setItem('funds', funds);
-  //   localStorage.setItem('cauldrons', cauldrons);
-  //   localStorage.setItem('witchesHired', witchesHired);
-  //   localStorage.setItem('marketersHired', marketersHired);
-  //   localStorage.setItem('isMusicEnabled', JSON.stringify(isMusicEnabled));
-  //   localStorage.setItem('isSoundEffectsEnabled', JSON.stringify(isSoundEffectsEnabled));
-  // }, [potions, funds, cauldrons, witchesHired, marketersHired, isMusicEnabled, isSoundEffectsEnabled]);
 
   // Function to handle potion brewing
   const handleBrew = () => {
@@ -141,19 +113,36 @@ function App() {
         {isSoundEffectsEnabled ? <VolumeUpIcon /> : <VolumeOffIcon />} {/* Toggle icon based on sound state */}
       </IconButton>
 
-      {/* Reset Game Button */}
+      {/* Help Button (replacing the reset button) */}
       <IconButton
         sx={{
           position: 'fixed',
           top: '10px',
           right: '10px',
-          color: 'red',
+          color: 'white',
           zIndex: 1000,
         }}
-        onClick={resetGame}
+        onClick={handleHelpOpen}
       >
-        <RestartAltIcon /> {/* Icon for reset/restart */}
+        <HelpOutlineIcon /> {/* "?" icon for game explanation */}
       </IconButton>
+
+      {/* Help Dialog */}
+      <Dialog open={helpOpen} onClose={handleHelpClose}>
+        <DialogTitle>How to Play</DialogTitle>
+        <DialogContent>
+          <Typography variant="body1">
+            Happy Halloween! Welcome to Spooky's Potion Shop. Here's how to play the game:
+          </Typography>
+          <Typography variant="body1" sx={{ marginTop: '10px' }}>
+            Click the cauldron to brew potions. The more cauldrons you have, the more potions you can brew per click. You can sell potions for gold and use gold to buy more cauldrons or hire witches to brew potions automatically.
+          </Typography>
+          <Typography variant="body1" sx={{ marginTop: '10px' }}>
+            Keep brewing and selling potions to expand your shop!
+          </Typography>
+          <Button onClick={handleHelpClose} sx={{ marginTop: '20px' }}>Got it!</Button>
+        </DialogContent>
+      </Dialog>
 
       <Box sx={{ marginTop: '50px' }}>
         <PotionBrewer
