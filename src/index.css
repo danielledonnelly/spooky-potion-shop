@@ -145,7 +145,7 @@ h2 {
   top: 50%;           
   left: 20px;          
   transform: translateY(-50%);  
-  z-index: 1000;
+  z-index: 1;
 }
 
 /* Updated Mascot Image Class */

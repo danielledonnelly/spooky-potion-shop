@@ -93,7 +93,6 @@ const Mascot = () => {
           borderRadius: '10px',      // Rounded corners
           width: '80%',              // Width of the bar
           textAlign: 'center',       // Center the text inside
-          zIndex: 2000,              // Make sure it's on top
           cursor: 'pointer',         // Pointer cursor to indicate it's clickable
         }}
         onClick={progressDialogue}    // Only progress the tutorial when the dialogue box is clicked

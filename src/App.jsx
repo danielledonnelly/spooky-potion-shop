@@ -128,19 +128,54 @@ function App() {
       </IconButton>
 
       {/* Help Dialog */}
-      <Dialog open={helpOpen} onClose={handleHelpClose}>
-        <DialogTitle>How to Play</DialogTitle>
+      <Dialog
+        open={helpOpen}
+        onClose={handleHelpClose}
+        fullWidth={true}
+        maxWidth="md"
+        PaperProps={{
+          sx: {
+            width: '666px !important',
+            top: '-66px',
+            backgroundColor: 'var(--black)', // Use dark mode
+            color: 'var(--white)',           // White text for readability
+            boxShadow: '0 0 15px rgba(255, 255, 255, 0.3)', // Spooky glow
+            border: '2px solid var(--purple)', // Purple border to match theme
+          }
+        }}
+      >
+        <DialogTitle
+          sx={{
+            backgroundColor: 'var(--dark-purple)', // Dark purple background
+            color: 'var(--label-purple)',          // Light purple text
+          }}
+        >
+          How to Play
+        </DialogTitle>
         <DialogContent>
           <Typography variant="body1">
-            Happy Halloween! Welcome to Spooky's Potion Shop. Here's how to play the game:
+            <br/>
+            Spooky Potion Shop is a short idle clicker game. It can run in the background if you switch tabs, but be careful! If you reload or close the page, your progress will reset.
           </Typography>
           <Typography variant="body1" sx={{ marginTop: '10px' }}>
-            Click the cauldron to brew potions. The more cauldrons you have, the more potions you can brew per click. You can sell potions for gold and use gold to buy more cauldrons or hire witches to brew potions automatically.
+            Click the cauldron to brew a batch of potions. The number of potions brewed per batch will be equal to the number of cauldrons. When you have some potions brewed, you can sell them for one gold each.
           </Typography>
           <Typography variant="body1" sx={{ marginTop: '10px' }}>
-            Keep brewing and selling potions to expand your shop!
+            Buy more cauldrons to increase the number of potions brewed per batch, and hire witches to automate the brewing process.
           </Typography>
-          <Button onClick={handleHelpClose} sx={{ marginTop: '20px' }}>Got it!</Button>
+          <Button
+            onClick={handleHelpClose}
+            sx={{
+              marginTop: '20px',
+              backgroundColor: 'var(--orange)',   // Orange background
+              color: 'var(--black)',              // Black text
+              '&:hover': {
+                backgroundColor: 'var(--dark-orange)', // Dark orange on hover
+              }
+            }}
+          >
+            Got it!
+          </Button>
         </DialogContent>
       </Dialog>
 
