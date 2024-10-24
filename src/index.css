@@ -148,6 +148,13 @@ h2 {
   z-index: 1;
 }
 
+.sidekick {
+  position: absolute !important;
+  bottom: 55%;           
+  right: 90px;          
+  transform: translateY(50%);  
+  z-index: 1;
+}
 /* Updated Mascot Image Class */
 .mascot-image {
   width: 150px;      

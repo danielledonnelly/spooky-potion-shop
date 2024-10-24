@@ -4,7 +4,7 @@ import { CardMedia, Box, Typography } from '@mui/material';
 // Import sidekick images
 import witchDefault from '../assets/witch-default.png';
 import witchBroom from '../assets/witch-broom.png';
-import witchStar from '../assets/witch-star.png';  
+import witchStar from '../assets/witch-star.png'; 
 
 const Sidekick = ({ isVisible }) => {
   const [dialogueIndex, setDialogueIndex] = useState(0);

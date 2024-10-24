@@ -78,7 +78,7 @@ function App() {
   return (
     <Container sx={{ textAlign: 'center', padding: '20px' }}>
       <Mascot />
-      {sidekickAppear && <Sidekick />}
+      {<Sidekick isVisible={sidekickAppear} />    }
       <audio ref={audioRef} loop autoPlay muted={!isMusicEnabled}>
         <source src={music} type="audio/mpeg" />
         Your browser does not support the audio element.
