@@ -142,26 +142,32 @@ h2 {
 
 .mascot {
   position: absolute !important;
-  top: 50%;           
-  left: 20px;          
-  transform: translateY(-50%);  
-  z-index: 1;
+  top: 25%;           
+  left: 5%;          
+  z-index: 0;
+}
+
+.mascot-image {
+  width: 150px;      
+  height: auto;      
+  max-height: 450px;  
+  object-fit: contain; 
 }
 
 .sidekick {
   position: absolute !important;
-  bottom: 55%;           
-  right: 90px;          
-  transform: translateY(50%);  
-  z-index: 1;
+  top: 25%;           
+  right: 5%;        
+  z-index: 0;
 }
-/* Updated Mascot Image Class */
-.mascot-image {
+
+.sidekick-image {
   width: 150px;      
-  height: auto;       /* Maintain aspect ratio */
-  max-height: 450px;  /* Ensure maximum height */
-  object-fit: contain; /* Ensure the image fits within the dimensions without stretching */
+  height: auto;      
+  max-height: 450px; 
+  object-fit: contain; 
 }
+
 
 /* Potion Brewer Styles */
 .potion-brewer-container {
