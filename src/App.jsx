@@ -10,6 +10,7 @@ import cauldronClickSound from './assets/cauldron-click.wav';
 import Mascot from './components/Mascot';
 import PotionBrewer from './components/PotionBrewer';
 import cauldronImage from './assets/cauldron.png';
+import Sidekick from './components/Sidekick';
 
 function App() {
   const [potions, setPotions] = useState(0);
@@ -20,7 +21,8 @@ function App() {
   const [cauldronSize, setCauldronSize] = useState(300);
   const [isMusicEnabled, setIsMusicEnabled] = useState(true);
   const [isSoundEffectsEnabled, setIsSoundEffectsEnabled] = useState(true);
-  const [helpOpen, setHelpOpen] = useState(false); // State to handle help dialog open/close
+  const [helpOpen, setHelpOpen] = useState(false); 
+  const [sidekickAppear, setSidekickAppear] = useState(false);
 
   const audioRef = useRef(null);
   const cauldronClickRef = useRef(null);
@@ -42,10 +44,10 @@ function App() {
 
   // Function to handle potion brewing
   const handleBrew = () => {
-    console.log("Brewing... Current potions:", potions);
+    // console.log("Brewing... Current potions:", potions);
     setPotions((prev) => {
       const newPotionCount = prev + cauldrons;
-      console.log("Updated potions after brewing:", newPotionCount);
+      // console.log("Updated potions after brewing:", newPotionCount);
       return newPotionCount;
     });
     setCauldronSize((prev) => prev + 10); // Slightly increase the cauldron size
@@ -61,14 +63,14 @@ function App() {
   const handleSell = (potionCount, pricePerPotion) => {
     setPotions((prevPotions) => {
       const actualPotionsToSell = Math.min(potionCount, prevPotions); // Ensure you can't sell more than you have
-      console.log("Selling... Current potions:", prevPotions, " Potions to sell:", actualPotionsToSell);
+      // console.log("Selling... Current potions:", prevPotions, " Potions to sell:", actualPotionsToSell);
       return Math.max(prevPotions - actualPotionsToSell, 0); // Decrease potions by the number sold
     });
 
     setFunds((prevFunds) => {
       const actualFundsToAdd = potionCount * pricePerPotion;
       const newFunds = prevFunds + actualFundsToAdd;
-      console.log("Updated funds after selling:", newFunds);
+      // console.log("Updated funds after selling:", newFunds);
       return newFunds;
     });
   };
@@ -76,6 +78,7 @@ function App() {
   return (
     <Container sx={{ textAlign: 'center', padding: '20px' }}>
       <Mascot />
+      {sidekickAppear && <Sidekick />}
       <audio ref={audioRef} loop autoPlay muted={!isMusicEnabled}>
         <source src={music} type="audio/mpeg" />
         Your browser does not support the audio element.
@@ -192,6 +195,7 @@ function App() {
           setWitchesHired={setWitchesHired}
           marketersHired={marketersHired}
           setMarketersHired={setMarketersHired}
+          setSidekickAppear={setSidekickAppear}
         />
       </Box>
 

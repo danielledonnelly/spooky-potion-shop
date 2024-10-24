@@ -15,9 +15,10 @@ const PotionBrewer = ({
   setWitchesHired,
   // marketersHired, 
   // setMarketersHired
+  setSidekickAppear,
 }) => {
   const [cauldronCost, setCauldronCost] = useState(75); // Initial cost of cauldrons is 75
-  const [witchCost, setWitchCost] = useState(400); // Initial cost to hire a witch is 400
+  const [witchCost, setWitchCost] = useState(10); // Initial cost to hire a witch is 400
   // const [marketerCost, setMarketerCost] = useState(100); // Cost to hire a marketer
 
   // Buy more cauldrons
@@ -35,6 +36,11 @@ const PotionBrewer = ({
       setWitchesHired((prev) => prev + 1); // Increase witch count
       setFunds((prev) => prev - witchCost); // Deduct witch cost from funds
       setWitchCost((prev) => Math.floor(prev * 1.6)); // Moderate price increase for witches
+
+      // If no witch has been hired before, trigger sidekick appearance
+      if (witchesHired === 0) {
+        setSidekickAppear(true);
+      }
     }
   };
 
@@ -43,7 +49,7 @@ const PotionBrewer = ({
     if (witchesHired > 0) {
       const brewInterval = setInterval(() => {
         const potionsToBrew = witchesHired * cauldrons; // Multiply cauldrons by witches
-        console.log("Witches brewing... Potions to brew:", potionsToBrew);
+        // console.log("Witches brewing... Potions to brew:", potionsToBrew);
         onBrew(potionsToBrew); // Brew potions based on the number of witches and cauldrons
       }, 1000); // Brew every 1 second
 
