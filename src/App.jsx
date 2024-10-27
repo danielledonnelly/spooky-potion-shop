@@ -1,16 +1,27 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Container, Box, CardMedia, IconButton, Dialog, DialogTitle, DialogContent, Typography, Button } from '@mui/material';
-import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-import VolumeOffIcon from '@mui/icons-material/VolumeOff';
-import MusicNoteIcon from '@mui/icons-material/MusicNote';
-import MusicOffIcon from '@mui/icons-material/MusicOff';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline'; // Import Help Icon for "?"
-import music from './assets/music.mp3';
-import cauldronClickSound from './assets/cauldron-click.wav';
-import Mascot from './components/Mascot';
-import PotionBrewer from './components/PotionBrewer';
-import cauldronImage from './assets/cauldron.png';
-import Sidekick from './components/Sidekick';
+import React, { useState, useRef, useEffect } from "react";
+import {
+  Container,
+  Box,
+  CardMedia,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Typography,
+  Button,
+} from "@mui/material";
+import VolumeUpIcon from "@mui/icons-material/VolumeUp";
+import VolumeOffIcon from "@mui/icons-material/VolumeOff";
+import MusicNoteIcon from "@mui/icons-material/MusicNote";
+import MusicOffIcon from "@mui/icons-material/MusicOff";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline"; // Import Help Icon for "?"
+import music from "./assets/music.mp3";
+import cauldronClickSound from "./assets/cauldron-click.wav";
+import Mascot from "./components/Mascot";
+import PotionBrewer from "./components/PotionBrewer";
+import cauldronImage from "./assets/cauldron.png";
+import Sidekick from "./components/Sidekick";
+import Draggable from "react-draggable";
 
 function App() {
   const [potions, setPotions] = useState(0);
@@ -21,7 +32,7 @@ function App() {
   const [cauldronSize, setCauldronSize] = useState(300);
   const [isMusicEnabled, setIsMusicEnabled] = useState(true);
   const [isSoundEffectsEnabled, setIsSoundEffectsEnabled] = useState(true);
-  const [helpOpen, setHelpOpen] = useState(false); 
+  const [helpOpen, setHelpOpen] = useState(false);
   const [sidekickAppear, setSidekickAppear] = useState(false);
 
   const audioRef = useRef(null);
@@ -30,6 +41,18 @@ function App() {
   // Handle help dialog open and close
   const handleHelpOpen = () => setHelpOpen(true);
   const handleHelpClose = () => setHelpOpen(false);
+
+  const handleDragStart = (e) => {
+    e.dataTransfer.setData("mascot", "dragging");
+  };
+
+  const handleDropOnCauldron = (e) => {
+    const mascot = e.dataTransfer.getData("mascot");
+    if (mascot === "dragging") {
+      setDialogue("Please don't turn me into skeleton soup!"); // Trigger dialogue
+      setMascotImage("skeleton-jump"); // Change mascot image
+    }
+  };
 
   useEffect(() => {
     if (audioRef.current) {
@@ -43,13 +66,9 @@ function App() {
   }, [isMusicEnabled]);
 
   // Function to handle potion brewing
-  const handleBrew = () => {
+  const handleBrew = (amount = 1) => {
     // console.log("Brewing... Current potions:", potions);
-    setPotions((prev) => {
-      const newPotionCount = prev + cauldrons;
-      // console.log("Updated potions after brewing:", newPotionCount);
-      return newPotionCount;
-    });
+    setPotions((prev) => prev + Number(amount));
     setCauldronSize((prev) => prev + 10); // Slightly increase the cauldron size
     setTimeout(() => setCauldronSize(300), 200); // Reset cauldron size after 200ms
 
@@ -76,9 +95,9 @@ function App() {
   };
 
   return (
-    <Container sx={{ textAlign: 'center', padding: '20px' }}>
-      <Mascot />
-      {<Sidekick isVisible={sidekickAppear} />    }
+    <Container sx={{ textAlign: "center", padding: "20px" }}>
+      <Mascot draggable onDragStart={handleDragStart} />
+      {<Sidekick isVisible={sidekickAppear} />}
       <audio ref={audioRef} loop autoPlay muted={!isMusicEnabled}>
         <source src={music} type="audio/mpeg" />
         Your browser does not support the audio element.
@@ -91,38 +110,40 @@ function App() {
       {/* Music Toggle Button */}
       <IconButton
         sx={{
-          position: 'fixed',
-          top: '10px',
-          right: '100px',
-          color: isMusicEnabled ? 'white' : 'grey',
+          position: "fixed",
+          top: "10px",
+          right: "100px",
+          color: isMusicEnabled ? "white" : "grey",
           zIndex: 1000,
         }}
         onClick={() => setIsMusicEnabled(!isMusicEnabled)}
       >
-        {isMusicEnabled ? <MusicNoteIcon /> : <MusicOffIcon />} {/* Toggle icon based on music state */}
+        {isMusicEnabled ? <MusicNoteIcon /> : <MusicOffIcon />}{" "}
+        {/* Toggle icon based on music state */}
       </IconButton>
 
       {/* Sound Effects Toggle Button */}
       <IconButton
         sx={{
-          position: 'fixed',
-          top: '10px',
-          right: '60px',
-          color: isSoundEffectsEnabled ? 'white' : 'grey',
+          position: "fixed",
+          top: "10px",
+          right: "60px",
+          color: isSoundEffectsEnabled ? "white" : "grey",
           zIndex: 1000,
         }}
         onClick={() => setIsSoundEffectsEnabled(!isSoundEffectsEnabled)}
       >
-        {isSoundEffectsEnabled ? <VolumeUpIcon /> : <VolumeOffIcon />} {/* Toggle icon based on sound state */}
+        {isSoundEffectsEnabled ? <VolumeUpIcon /> : <VolumeOffIcon />}{" "}
+        {/* Toggle icon based on sound state */}
       </IconButton>
 
       {/* Help Button (replacing the reset button) */}
       <IconButton
         sx={{
-          position: 'fixed',
-          top: '10px',
-          right: '10px',
-          color: 'white',
+          position: "fixed",
+          top: "10px",
+          right: "10px",
+          color: "white",
           zIndex: 1000,
         }}
         onClick={handleHelpOpen}
@@ -138,43 +159,48 @@ function App() {
         maxWidth="md"
         PaperProps={{
           sx: {
-            width: '666px !important',
-            top: '-66px',
-            backgroundColor: 'var(--black)', // Use dark mode
-            color: 'var(--white)',           // White text for readability
-            boxShadow: '0 0 15px rgba(255, 255, 255, 0.3)', // Spooky glow
-            border: '2px solid var(--purple)', // Purple border to match theme
-          }
+            width: "666px !important",
+            top: "-66px",
+            backgroundColor: "var(--black)", // Use dark mode
+            color: "var(--white)", // White text for readability
+            boxShadow: "0 0 15px rgba(255, 255, 255, 0.3)", // Spooky glow
+            border: "2px solid var(--purple)", // Purple border to match theme
+          },
         }}
       >
         <DialogTitle
           sx={{
-            backgroundColor: 'var(--dark-purple)', // Dark purple background
-            color: 'var(--label-purple)',          // Light purple text
+            backgroundColor: "var(--dark-purple)", // Dark purple background
+            color: "var(--label-purple)", // Light purple text
           }}
         >
           How to Play
         </DialogTitle>
         <DialogContent>
           <Typography variant="body1">
-            <br/>
-            Spooky Potion Shop is a short idle clicker game. It can run in the background if you switch tabs, but be careful! If you reload or close the page, your progress will reset.
+            <br />
+            Spooky Potion Shop is a short idle clicker game. It can run in the
+            background if you switch tabs, but be careful! If you reload or
+            close the page, your progress will reset.
           </Typography>
-          <Typography variant="body1" sx={{ marginTop: '10px' }}>
-            Click the cauldron to brew a batch of potions. The number of potions brewed per batch will be equal to the number of cauldrons. When you have some potions brewed, you can sell them for one gold each.
+          <Typography variant="body1" sx={{ marginTop: "10px" }}>
+            Click the cauldron to brew a batch of potions. The number of potions
+            brewed per batch will be equal to the number of cauldrons. When you
+            have some potions brewed, you can sell them for one gold each.
           </Typography>
-          <Typography variant="body1" sx={{ marginTop: '10px' }}>
-            Buy more cauldrons to increase the number of potions brewed per batch, and hire witches to automate the brewing process.
+          <Typography variant="body1" sx={{ marginTop: "10px" }}>
+            Buy more cauldrons to increase the number of potions brewed per
+            batch, and hire witches to automate the brewing process.
           </Typography>
           <Button
             onClick={handleHelpClose}
             sx={{
-              marginTop: '20px',
-              backgroundColor: 'var(--orange)',   // Orange background
-              color: 'var(--black)',              // Black text
-              '&:hover': {
-                backgroundColor: 'var(--dark-orange)', // Dark orange on hover
-              }
+              marginTop: "20px",
+              backgroundColor: "var(--orange)", // Orange background
+              color: "var(--black)", // Black text
+              "&:hover": {
+                backgroundColor: "var(--dark-orange)", // Dark orange on hover
+              },
             }}
           >
             Got it!
@@ -182,7 +208,7 @@ function App() {
         </DialogContent>
       </Dialog>
 
-      <Box sx={{ marginTop: '50px' }}>
+      <Box sx={{ marginTop: "50px" }}>
         <PotionBrewer
           potions={potions}
           funds={funds}
@@ -201,10 +227,10 @@ function App() {
 
       <Box
         sx={{
-          position: 'fixed',
-          bottom: '100px',
-          left: '50%',
-          transform: 'translateX(-50%)',
+          position: "fixed",
+          bottom: "100px",
+          left: "50%",
+          transform: "translateX(-50%)",
           zIndex: 1000,
         }}
       >
@@ -212,8 +238,15 @@ function App() {
           component="img"
           image={cauldronImage}
           alt="Cauldron"
-          sx={{ width: cauldronSize, height: cauldronSize, cursor: 'pointer', transition: 'width 0.2s, height 0.2s' }}
-          onClick={handleBrew}
+          sx={{
+            width: cauldronSize,
+            height: cauldronSize,
+            cursor: "pointer",
+            transition: "width 0.2s, height 0.2s",
+          }}
+          onClick={() => handleBrew(1)} // Pass 1 explicitly for manual brewing
+          onDrop={handleDropOnCauldron}
+          onDragOver={(e) => e.preventDefault()} // Allow drop
         />
       </Box>
     </Container>
