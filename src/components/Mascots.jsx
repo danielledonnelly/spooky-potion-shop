@@ -51,10 +51,14 @@ const Mascots = ({ isSidekickVisible }) => {
 
   // Progress sidekick dialogue
   const progressSidekickDialogue = () => {
+    if (sidekickDialogueIndex === 0) {
+      setMascotImage(skeletonDefault); // Reset skeleton to default on first sidekick dialogue click
+    }
     if (sidekickDialogueIndex < sidekickDialogueLines.length - 1) {
       setSidekickDialogueIndex((prevIndex) => prevIndex + 1);
     }
   };
+  
 
   // Update mascot image based on dialogue
   useEffect(() => {
@@ -72,6 +76,17 @@ const Mascots = ({ isSidekickVisible }) => {
         setMascotImage(skeletonDefault);
     }
   }, [mascotDialogueIndex]);
+
+  useEffect(() => {
+    if (isSidekickVisible) {
+      setMascotImage(skeletonJump); // Make mascot jump when sidekick appears
+      setSidekickImage(witchDefault); // Show sidekick's default image
+      setSidekickDialogueIndex(0); // Reset sidekick dialogue index
+    } else {
+      setMascotImage(skeletonDefault); // Reset to default if sidekick is not visible
+    }
+  }, [isSidekickVisible]);
+  
 
   // Update sidekick image based on dialogue
   useEffect(() => {

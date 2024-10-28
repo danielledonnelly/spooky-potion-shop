@@ -36,13 +36,14 @@ const PotionBrewer = ({
       setWitchesHired((prev) => prev + 1); // Increase witch count
       setFunds((prev) => prev - witchCost); // Deduct witch cost from funds
       setWitchCost((prev) => Math.floor(prev * 1.6)); // Moderate price increase for witches
-
+  
       // If no witch has been hired before, trigger sidekick appearance
       if (witchesHired === 0) {
         setSidekickAppear(true);
       }
     }
   };
+  
 
   // Automatically brew potions every 1 second based on witches and cauldrons
   useEffect(() => {

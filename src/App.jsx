@@ -83,7 +83,7 @@ function App() {
   return (
     <Container sx={{ textAlign: 'center', padding: '20px' }}>
       {/* Updated to use Mascots component */}
-      <Mascots isVisible={sidekickAppear} />
+      <Mascots isSidekickVisible={sidekickAppear} />
 
       <audio ref={audioRef} loop autoPlay muted={!isMusicEnabled}>
         <source src={music} type="audio/mpeg" />
