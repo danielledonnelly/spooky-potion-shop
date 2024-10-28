@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Button, Typography, Tooltip } from "@mui/material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline"; // Import HelpOutline Icon
 import shopSign from "../assets/shop-sign.png"; // Import shop sign image
+import star from "../assets/star.png"; // Import shop sign image
 
 const PotionBrewer = ({
   potions,
@@ -20,6 +21,7 @@ const PotionBrewer = ({
   const [cauldronCost, setCauldronCost] = useState(75); // Initial cost of cauldrons is 75
   const [witchCost, setWitchCost] = useState(10); // Initial cost to hire a witch is 400
   // const [marketerCost, setMarketerCost] = useState(100); // Cost to hire a marketer
+  const [stars, setStars] = useState(0);
 
   // Buy more cauldrons
   const buyCauldron = () => {
@@ -36,14 +38,14 @@ const PotionBrewer = ({
       setWitchesHired((prev) => prev + 1); // Increase witch count
       setFunds((prev) => prev - witchCost); // Deduct witch cost from funds
       setWitchCost((prev) => Math.floor(prev * 1.6)); // Moderate price increase for witches
-  
+
       // If no witch has been hired before, trigger sidekick appearance
       if (witchesHired === 0) {
         setSidekickAppear(true);
+        setStars(1);
       }
     }
   };
-  
 
   // Automatically brew potions every 1 second based on witches and cauldrons
   useEffect(() => {
@@ -81,6 +83,24 @@ const PotionBrewer = ({
         alt="Shop Sign"
         sx={{ width: "100%", maxWidth: "700px", marginBottom: "5px" }}
       />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "5px",
+          marginTop: "5px",
+        }}
+      >
+        {Array.from({ length: stars }).map((_, index) => (
+          <Box
+            component="img"
+            key={index}
+            src={star} 
+            alt="Star"
+            sx={{ width: "50px", height: "50px" }}
+          />
+        ))}
+      </Box>
 
       {/* Resources and Actions Sections Side-by-Side */}
       <Box className="potion-brewer-sections">

@@ -20,7 +20,7 @@ function App() {
   const [witchesHired, setWitchesHired] = useState(0);
   const [marketersHired, setMarketersHired] = useState(0);
   const [cauldronSize, setCauldronSize] = useState(300);
-  const [isMusicEnabled, setIsMusicEnabled] = useState(true);
+  const [isMusicEnabled, setIsMusicEnabled] = useState(false);
   const [isSoundEffectsEnabled, setIsSoundEffectsEnabled] = useState(true);
   const [helpOpen, setHelpOpen] = useState(false); 
   const [sidekickAppear, setSidekickAppear] = useState(false);
