@@ -38,11 +38,11 @@ const PotionBrewer = ({
       setWitchesHired((prev) => prev + 1); // Increase witch count
       setFunds((prev) => prev - witchCost); // Deduct witch cost from funds
       setWitchCost((prev) => Math.floor(prev * 1.6)); // Moderate price increase for witches
+      setStars((prevStars) => prevStars + 1);
 
       // If no witch has been hired before, trigger sidekick appearance
       if (witchesHired === 0) {
         setSidekickAppear(true);
-        setStars(1);
       }
     }
   };
@@ -87,17 +87,19 @@ const PotionBrewer = ({
         sx={{
           display: "flex",
           justifyContent: "center",
-          gap: "5px",
-          marginTop: "5px",
+          alignItems: "center",
+          gap: "1px", 
+          position: "fixed",
+          top: "100px", 
         }}
       >
         {Array.from({ length: stars }).map((_, index) => (
           <Box
             component="img"
             key={index}
-            src={star} 
+            src={star}
             alt="Star"
-            sx={{ width: "50px", height: "50px" }}
+            sx={{ width: "40px", height: "40px" }}
           />
         ))}
       </Box>
