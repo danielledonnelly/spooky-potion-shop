@@ -24,6 +24,7 @@ function App() {
   const [isSoundEffectsEnabled, setIsSoundEffectsEnabled] = useState(true);
   const [helpOpen, setHelpOpen] = useState(false); 
   const [sidekickAppear, setSidekickAppear] = useState(false);
+  const [totalPotionsSold, setTotalPotionsSold] = useState(0); // Track total potions sold
 
   const audioRef = useRef(null);
   const cauldronClickRef = useRef(null);
@@ -78,6 +79,8 @@ function App() {
       const actualFundsToAdd = potionCount * pricePerPotion;
       return prevFunds + actualFundsToAdd;
     });
+
+    setTotalPotionsSold((prevTotal) => prevTotal + Math.min(potionCount, potions)); // Increment total potions sold
   };
 
   return (
@@ -184,6 +187,8 @@ function App() {
           marketersHired={marketersHired}
           setMarketersHired={setMarketersHired}
           setSidekickAppear={setSidekickAppear}
+          totalPotionsSold={totalPotionsSold}  
+          setTotalPotionsSold={setTotalPotionsSold}
         />
       </Box>
 

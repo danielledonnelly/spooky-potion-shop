@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Box, Button, Typography, Tooltip } from "@mui/material";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline"; // Import HelpOutline Icon
-import shopSign from "../assets/shop-sign.png"; // Import shop sign image
-import star from "../assets/star.png"; // Import shop sign image
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import shopSign from "../assets/shop-sign.png"; 
+import star from "../assets/star.png"; 
 
 const PotionBrewer = ({
   potions,
@@ -17,11 +17,12 @@ const PotionBrewer = ({
   // marketersHired,
   // setMarketersHired
   setSidekickAppear,
+  totalPotionsSold,
+  setTotalPotionsSold
 }) => {
   const [cauldronCost, setCauldronCost] = useState(75); // Initial cost of cauldrons is 75
   const [witchCost, setWitchCost] = useState(10); // Initial cost to hire a witch is 400
   // const [marketerCost, setMarketerCost] = useState(100); // Cost to hire a marketer
-  const [stars, setStars] = useState(0);
 
   // Buy more cauldrons
   const buyCauldron = () => {
@@ -119,11 +120,12 @@ const PotionBrewer = ({
                 <Tooltip
                   title="Buy cauldrons to boost the number of potions brewed per batch."
                   placement="top"
-                  componentsProps={{ // The blurb below is a workaround to increase width of tooltip for cauldrons specifically
+                  componentsProps={{
+                    // The blurb below is a workaround to increase width of tooltip for cauldrons specifically
                     tooltip: {
                       sx: {
-                        maxWidth: 400, 
-                        whiteSpace: "nowrap", 
+                        maxWidth: 400,
+                        whiteSpace: "nowrap",
                       },
                     },
                   }}
@@ -146,6 +148,21 @@ const PotionBrewer = ({
                 <Typography sx={{ fontWeight: "bold" }}>Witches</Typography>
               </Box>
               <Typography>{witchesHired}</Typography>
+            </Box>
+
+            <Box className="section-item">
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Tooltip
+                  title="Sell a million potions to win the game!"
+                  placement="top"
+                >
+                  <HelpOutlineIcon className="help-icon" />
+                </Tooltip>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  Total Potions Sold
+                </Typography>
+              </Box>
+              <Typography>{totalPotionsSold}</Typography>
             </Box>
 
             {/* Marketers Section (removed for now) */}
