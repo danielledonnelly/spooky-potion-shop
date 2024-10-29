@@ -88,7 +88,7 @@ const PotionBrewer = ({
         {/* Resources Section */}
         <Box className="section-box">
           <Typography variant="h6" className="section-label">
-            Resources
+            {/* Resources */}
           </Typography>
           <Box>
             <Box className="section-item">
@@ -164,7 +164,7 @@ const PotionBrewer = ({
         {/* Actions Section */}
         <Box className="section-box">
           <Typography variant="h6" className="section-label">
-            Actions
+            {/* Actions */}
           </Typography>
 
           <Button

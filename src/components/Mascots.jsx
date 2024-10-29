@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { CardMedia, Box, Typography } from '@mui/material';
-import skeletonDefault from '../assets/skeleton-default.png';
-import skeletonWitch from '../assets/skeleton-witch.png';
-import skeletonBlush from '../assets/skeleton-blush.png';
-import skeletonJump from '../assets/skeleton-jump.png';
-import witchDefault from '../assets/witch-default.png';
-import witchBroom from '../assets/witch-broom.png';
-import witchStar from '../assets/witch-star.png';
+import React, { useState, useEffect } from "react";
+import { CardMedia, Box, Typography } from "@mui/material";
+import skeletonDefault from "../assets/skeleton-default.png";
+import skeletonWitch from "../assets/skeleton-witch.png";
+import skeletonBlush from "../assets/skeleton-blush.png";
+import skeletonJump from "../assets/skeleton-jump.png";
+import witchDefault from "../assets/witch-default.png";
+import witchBroom from "../assets/witch-broom.png";
+import witchStar from "../assets/witch-star.png";
 
 const Mascots = ({ isSidekickVisible }) => {
   // Mascot state
@@ -58,7 +58,6 @@ const Mascots = ({ isSidekickVisible }) => {
       setSidekickDialogueIndex((prevIndex) => prevIndex + 1);
     }
   };
-  
 
   // Update mascot image based on dialogue
   useEffect(() => {
@@ -86,7 +85,6 @@ const Mascots = ({ isSidekickVisible }) => {
       setMascotImage(skeletonDefault); // Reset to default if sidekick is not visible
     }
   }, [isSidekickVisible]);
-  
 
   // Update sidekick image based on dialogue
   useEffect(() => {
@@ -103,11 +101,16 @@ const Mascots = ({ isSidekickVisible }) => {
   }, [sidekickDialogueIndex]);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <div style={{ display: "flex", justifyContent: "space-between" }}>
       {/* Mascot Section */}
       <div className="mascot">
-        <CardMedia component="img" image={mascotImage} alt="Mascot" className="mascot-image" />
-        <Box
+        <CardMedia
+          component="img"
+          image={mascotImage}
+          alt="Mascot"
+          className="mascot-image"
+        />
+        {/* <Box
           sx={{
             position: 'fixed',
             bottom: '20px',
@@ -123,14 +126,19 @@ const Mascots = ({ isSidekickVisible }) => {
           onClick={progressMascotDialogue}
         >
           <Typography variant="h6">{mascotDialogueLines[mascotDialogueIndex]}</Typography>
-        </Box>
+        </Box> */}
       </div>
 
       {/* Sidekick Section (only render if isSidekickVisible is true) */}
       {isSidekickVisible && (
         <div className="sidekick">
-          <CardMedia component="img" image={sidekickImage} alt="Sidekick" className="sidekick-image" />
-          <Box
+          <CardMedia
+            component="img"
+            image={sidekickImage}
+            alt="Sidekick"
+            className="sidekick-image"
+          />
+          {/* <Box
             sx={{
               position: 'fixed',
               bottom: '20px',
@@ -146,9 +154,33 @@ const Mascots = ({ isSidekickVisible }) => {
             onClick={progressSidekickDialogue}
           >
             <Typography variant="h6">{sidekickDialogueLines[sidekickDialogueIndex]}</Typography>
-          </Box>
+          </Box> */}
         </div>
       )}
+      {/* Shared Dialogue Box */}
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: "20px",
+          left: "10%",
+          backgroundColor: "var(--black)",
+          color: isSidekickVisible ? "#B664AA" : "#fff", // Switch color based on visibility
+          padding: "15px 50px",
+          borderRadius: "10px",
+          width: "80%",
+          textAlign: "center",
+          cursor: "pointer",
+        }}
+        onClick={
+          isSidekickVisible ? progressSidekickDialogue : progressMascotDialogue
+        } // Use correct function
+      >
+        <Typography variant="h6">
+          {isSidekickVisible
+            ? sidekickDialogueLines[sidekickDialogueIndex]
+            : mascotDialogueLines[mascotDialogueIndex]}
+        </Typography>
+      </Box>
     </div>
   );
 };
