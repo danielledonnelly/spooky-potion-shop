@@ -38,7 +38,6 @@ const PotionBrewer = ({
       setWitchesHired((prev) => prev + 1); // Increase witch count
       setFunds((prev) => prev - witchCost); // Deduct witch cost from funds
       setWitchCost((prev) => Math.floor(prev * 1.6)); // Moderate price increase for witches
-      setStars((prevStars) => prevStars + 1);
 
       // If no witch has been hired before, trigger sidekick appearance
       if (witchesHired === 0) {
@@ -53,7 +52,7 @@ const PotionBrewer = ({
       const brewInterval = setInterval(() => {
         const potionsToBrew = witchesHired * cauldrons; // Calculate potions based on witches and cauldrons
         onBrew(potionsToBrew); // Pass the calculated potions to onBrew
-      }, 1000); // Brew every 1 second
+      }, 5000); // Brew every 5 seconds NOTE TO SELF: This was originally every 1 second but the frequency of the sound effects killed me
 
       return () => clearInterval(brewInterval); // Clear the interval on unmount
     }
@@ -83,26 +82,6 @@ const PotionBrewer = ({
         alt="Shop Sign"
         sx={{ width: "100%", maxWidth: "700px", marginBottom: "5px" }}
       />
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "1px", 
-          position: "fixed",
-          top: "100px", 
-        }}
-      >
-        {Array.from({ length: stars }).map((_, index) => (
-          <Box
-            component="img"
-            key={index}
-            src={star}
-            alt="Star"
-            sx={{ width: "40px", height: "40px" }}
-          />
-        ))}
-      </Box>
 
       {/* Resources and Actions Sections Side-by-Side */}
       <Box className="potion-brewer-sections">
@@ -115,7 +94,7 @@ const PotionBrewer = ({
             <Box className="section-item">
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Tooltip
-                  title="Potions can be brewed manually by clicking the cauldron, or automatically by hiring a witch."
+                  title="Click the cauldron to brew a batch of potions."
                   placement="top"
                 >
                   <HelpOutlineIcon className="help-icon" />
@@ -127,10 +106,7 @@ const PotionBrewer = ({
 
             <Box className="section-item">
               <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Tooltip
-                  title="Gold can be earned manually by selling all your potion stock."
-                  placement="top"
-                >
+                <Tooltip title="Sell potions to get gold." placement="top">
                   <HelpOutlineIcon className="help-icon" />
                 </Tooltip>
                 <Typography sx={{ fontWeight: "bold" }}>Gold</Typography>
@@ -141,8 +117,16 @@ const PotionBrewer = ({
             <Box className="section-item">
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Tooltip
-                  title="The number of cauldrons represents how many potions are produced per batch."
+                  title="Buy cauldrons to boost the number of potions brewed per batch."
                   placement="top"
+                  componentsProps={{ // The blurb below is a workaround to increase width of tooltip for cauldrons specifically
+                    tooltip: {
+                      sx: {
+                        maxWidth: 400, 
+                        whiteSpace: "nowrap", 
+                      },
+                    },
+                  }}
                 >
                   <HelpOutlineIcon className="help-icon" />
                 </Tooltip>
@@ -154,7 +138,7 @@ const PotionBrewer = ({
             <Box className="section-item">
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Tooltip
-                  title="Witches brew potions every 1 second, multiplied by the number of cauldrons."
+                  title="Hire witches to auto brew potions."
                   placement="top"
                 >
                   <HelpOutlineIcon className="help-icon" />

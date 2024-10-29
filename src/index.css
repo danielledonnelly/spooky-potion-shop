@@ -212,7 +212,8 @@ h2 {
 }
 
 .help-icon {
-  font-size: 16px;
+  font-size: 14px !important;
   color: grey;
-  margin-right: 1px;
+  margin-right: 3px;
+  margin-bottom: 3px !important;
 }
