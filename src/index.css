@@ -220,25 +220,6 @@ h2 {
 }
 
 @media (max-width: 768px) {
-  
-  .potion-brewer-container {
-    padding: 15px;
-    margin: 0 auto;
-    max-width: 90%;
-  }
-
-  .potion-brewer-sections {
-    flex-direction: column;
-    align-items: flex-start; /* Aligns sections to the left */
-    margin-left: 5%; /* Moves sections to the left */
-    width: 90%;
-  }
-
-  .section-box {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-  }
 
   button {
     width: 100%;
@@ -247,14 +228,26 @@ h2 {
     margin-bottom: 10px;
   }
 
-  .shop-sign {
-    margin-bottom: 15px;
+  .resources {
+    margin-top: 20px; 
+  }
+
+  .option-button {
+    position: fixed;
+    top: 8000px !important; 
+    right: 10px;
   }
 
   .cauldron {
     position: relative;
-    bottom: 0;
-    margin-top: 20px;
+    bottom: 100px; 
+    margin-top: 100px;
+    transform: scale(0.9); 
+  }
+
+  .mascot, .sidekick {
+    max-width: 200px; 
+    height: auto;
   }
 
   .help-icon {
