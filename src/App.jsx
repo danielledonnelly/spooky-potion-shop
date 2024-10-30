@@ -24,11 +24,50 @@ function App() {
   const [isSoundEffectsEnabled, setIsSoundEffectsEnabled] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false); 
   const [sidekickAppear, setSidekickAppear] = useState(false);
-  const [totalPotionsSold, setTotalPotionsSold] = useState(0); // Track total potions sold
+  const [totalPotionsSold, setTotalPotionsSold] = useState(0); 
+  const [isMobile, setIsMobile] = useState(false);
 
   const audioRef = useRef(null);
   const cauldronClickRef = useRef(null);
 
+  // Mobile handling
+  useEffect(() => {
+    // Check screen width on mount and update the isMobile state
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    // Set initial value
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  <Container sx={{ textAlign: 'center', padding: '20px' }}>
+  {isMobile ? (
+    <Box
+      sx={{
+        // styles here
+      }}
+    >
+      <Typography variant="h4" gutterBottom>
+        This Game is Designed for PC
+      </Typography>
+      <Typography variant="body1">
+        Spooky Potion Shop is best experienced on a desktop. Please switch to a PC for the full gameplay experience!
+      </Typography>
+    </Box>
+  ) : (
+    <>
+      {/* Place the rest of your game components here */}
+    </>
+  )}
+</Container>
+
+  
   // Handle help dialog open and close
   const handleHelpOpen = () => setHelpOpen(true);
   const handleHelpClose = () => setHelpOpen(false);

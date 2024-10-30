@@ -218,3 +218,46 @@ h2 {
   margin-right: 3px;
   margin-bottom: 3px !important;
 }
+
+@media (max-width: 768px) {
+  
+  .potion-brewer-container {
+    padding: 15px;
+    margin: 0 auto;
+    max-width: 90%;
+  }
+
+  .potion-brewer-sections {
+    flex-direction: column;
+    align-items: flex-start; /* Aligns sections to the left */
+    margin-left: 5%; /* Moves sections to the left */
+    width: 90%;
+  }
+
+  .section-box {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+  }
+
+  button {
+    width: 100%;
+    font-size: 14px;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+  }
+
+  .shop-sign {
+    margin-bottom: 15px;
+  }
+
+  .cauldron {
+    position: relative;
+    bottom: 0;
+    margin-top: 20px;
+  }
+
+  .help-icon {
+    font-size: 12px;
+  }
+}

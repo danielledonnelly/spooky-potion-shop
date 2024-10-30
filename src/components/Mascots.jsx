@@ -184,6 +184,7 @@ const Mascots = ({ isSidekickVisible }) => {
           width: "80%",
           textAlign: "center",
           cursor: "pointer",
+          zIndex: "3"
         }}
         onClick={
           isSidekickVisible ? progressSidekickDialogue : progressMascotDialogue
