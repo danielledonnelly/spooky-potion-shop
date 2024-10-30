@@ -47,6 +47,7 @@ button {
   cursor: pointer; /* Pointer cursor on hover */
   transition: all 0.4s ease; /* Smooth transition for hover effects */
   outline: none; /* Remove focus outline */
+  height: 35px;
 }
 
 /* Sell Potions Button - Neon Green (switched) */

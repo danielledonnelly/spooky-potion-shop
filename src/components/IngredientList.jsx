@@ -1,3 +1,4 @@
+// This component is no longer used in the game, just keeping it here in case I want to implement an Ingredient List again in the future.
 import React, { useState } from 'react';
 import { Grid2, CardMedia, Box } from '@mui/material';
 

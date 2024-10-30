@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Box, Button, Typography, Tooltip } from "@mui/material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import shopSign from "../assets/shop-sign.png"; 
-import star from "../assets/star.png"; 
+import shopSign from "../assets/shop-sign.png";
+import star from "../assets/star.png";
 
 const PotionBrewer = ({
   potions,
@@ -18,10 +18,10 @@ const PotionBrewer = ({
   // setMarketersHired
   setSidekickAppear,
   totalPotionsSold,
-  setTotalPotionsSold
+  setTotalPotionsSold,
 }) => {
-  const [cauldronCost, setCauldronCost] = useState(75); // Initial cost of cauldrons is 75
-  const [witchCost, setWitchCost] = useState(10); // Initial cost to hire a witch is 400
+  const [cauldronCost, setCauldronCost] = useState(50); // Initial cost of cauldrons is 75
+  const [witchCost, setWitchCost] = useState(100); // Initial cost to hire a witch is 400
   // const [marketerCost, setMarketerCost] = useState(100); // Cost to hire a marketer
 
   // Buy more cauldrons
@@ -53,7 +53,7 @@ const PotionBrewer = ({
       const brewInterval = setInterval(() => {
         const potionsToBrew = witchesHired * cauldrons; // Calculate potions based on witches and cauldrons
         onBrew(potionsToBrew); // Pass the calculated potions to onBrew
-      }, 5000); // Brew every 5 seconds NOTE TO SELF: This was originally every 1 second but the frequency of the sound effects killed me
+      }, 1000); // Brew every 1 second
 
       return () => clearInterval(brewInterval); // Clear the interval on unmount
     }
@@ -81,7 +81,14 @@ const PotionBrewer = ({
         component="img"
         src={shopSign}
         alt="Shop Sign"
-        sx={{ width: "100%", maxWidth: "700px", marginBottom: "5px" }}
+        sx={{
+          width: "100%",
+          maxWidth: "700px", // Adjust for smaller size
+          marginBottom: "5px",
+          display: "block",
+          marginLeft: "auto",
+          marginRight: "auto", // Centers the image
+        }}
       />
 
       {/* Resources and Actions Sections Side-by-Side */}
@@ -140,8 +147,17 @@ const PotionBrewer = ({
             <Box className="section-item">
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Tooltip
-                  title="Hire witches to auto brew potions."
+                  title="Hire witches; each will auto-brew one batch of potions per second."
                   placement="top"
+                  componentsProps={{
+                    // The blurb below is a workaround to increase width of tooltip for cauldrons specifically
+                    tooltip: {
+                      sx: {
+                        maxWidth: 400,
+                        whiteSpace: "nowrap",
+                      },
+                    },
+                  }}
                 >
                   <HelpOutlineIcon className="help-icon" />
                 </Tooltip>

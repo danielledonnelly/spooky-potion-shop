@@ -21,25 +21,26 @@ const Mascots = ({ isSidekickVisible }) => {
   const mascotDialogueLines = [
     "Hello and happy Halloween! Welcome to Spooky's Potion Shop.",
     "I've never seen a skeleton wearing a skin suit before! Where did you get it?",
-    "Huh, what's that? Oh, you're a human? My mistake! You must be the new manager, then.",
+    "Huh, what's that? You're a human?! My mistake! You must be the new manager, then.",
     "My name is Spooky S. Skeleton, and I'm the owner of this shop!",
-    "It's nothing special right now, but with your help, this place will be a five-star shop in no time!",
-    "Click the cauldron a few times to brew some potions.",
-    "Then, when you're ready, click the SELL POTIONS button.",
+    "It's a little bare-bones now, but with your help, this place will be crawling with customers!",
+    "Click the cauldron a few times to brew some potions. Then, when you're ready, click the SELL POTIONS button.",
     "Each potion sells for one gold!  You can use gold to brew potions faster.",
     "Buying a cauldron will increase the number of potions brewed per batch.",
     "If you have ten cauldrons, then every click will brew ten potions!",
     "To speed things up even more and automate the process, you can hire a witch.",
-    "We can get into the details on how that works later.",
+    "We can get into the details on how that works later. For now...",
     "Get brewing!",
+    "‎", // When I just put in a space, the bar collapses, but this allows there to be a blank space at the end of the dialogue without changing the dialogue bar
   ];
 
   // Sidekick dialogue lines
   const sidekickDialogueLines = [
     "Greetings, young apprentice!",
-    "I'm here to assist with your potion endeavors.",
-    "I see you've hired your first witch! Excellent choice.",
+    "I'm here to assist with your potion brewing. Let's speed things up!",
+    "I'll brew a batch of potions every second. And if you hire more witches, they can each do the same!",
     "Now let's get brewing and make some magic!",
+    "‎", // When I just put in a space, the bar collapses, but this allows there to be a blank space at the end of the dialogue without changing the dialogue bar
   ];
 
   // Progress mascot dialogue
@@ -71,6 +72,18 @@ const Mascots = ({ isSidekickVisible }) => {
       case 3:
         setMascotImage(skeletonWitch);
         break;
+      case 4: 
+        setMascotImage(skeletonBlush);
+        break;
+      case 6:
+        setMascotImage(skeletonJump);
+        break;
+      case 9:
+        setMascotImage(skeletonWitch);
+        break;
+      case 11:
+          setMascotImage(skeletonJump);
+          break;
       default:
         setMascotImage(skeletonDefault);
     }
@@ -162,7 +175,8 @@ const Mascots = ({ isSidekickVisible }) => {
         sx={{
           position: "fixed",
           bottom: "20px",
-          left: "10%",
+          left: "50%", // This and the line below it ensure that the dialogue box is centred
+          transform: "translateX(-50%)", 
           backgroundColor: "var(--black)",
           color: isSidekickVisible ? "#B664AA" : "#fff", // Switch color based on visibility
           padding: "15px 50px",

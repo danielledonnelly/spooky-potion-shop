@@ -21,7 +21,7 @@ function App() {
   const [marketersHired, setMarketersHired] = useState(0);
   const [cauldronSize, setCauldronSize] = useState(300);
   const [isMusicEnabled, setIsMusicEnabled] = useState(false);
-  const [isSoundEffectsEnabled, setIsSoundEffectsEnabled] = useState(true);
+  const [isSoundEffectsEnabled, setIsSoundEffectsEnabled] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false); 
   const [sidekickAppear, setSidekickAppear] = useState(false);
   const [totalPotionsSold, setTotalPotionsSold] = useState(0); // Track total potions sold
@@ -57,16 +57,17 @@ function App() {
   }, [isMusicEnabled]);
 
   // Function to handle potion brewing
-  const handleBrew = (amount = 1) => {
+  const handleBrew = (amount = 1, isPlayerInitiated = false) => {
     setPotions((prev) => prev + amount);
     setCauldronSize((prev) => prev + 10); // Slightly increase the cauldron size
     setTimeout(() => setCauldronSize(300), 200); // Reset cauldron size after 200ms
-
-    if (isSoundEffectsEnabled && cauldronClickRef.current) {
+  
+    if (isPlayerInitiated && isSoundEffectsEnabled && cauldronClickRef.current) {
       cauldronClickRef.current.currentTime = 0; // Reset the sound to the beginning
       cauldronClickRef.current.play(); // Play the click sound
     }
   };
+  
 
   // Function to handle selling potions
   const handleSell = (potionCount, pricePerPotion) => {
@@ -206,7 +207,7 @@ function App() {
           image={cauldronImage}
           alt="Cauldron"
           sx={{ width: cauldronSize, height: cauldronSize, cursor: 'pointer', transition: 'width 0.2s, height 0.2s' }}
-          onClick={() => handleBrew(cauldrons)}
+          onClick={() => handleBrew(cauldrons, true)}
           onDrop={handleDropOnCauldron}
           onDragOver={(e) => e.preventDefault()}
         />
