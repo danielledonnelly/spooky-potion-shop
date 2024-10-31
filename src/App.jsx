@@ -37,42 +37,47 @@ function App() {
   const [totalPotionsSold, setTotalPotionsSold] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
+  // const [dialogue, setDialogue] = useState(""); 
+  // const [mascotImage, setMascotImage] = useState(skeletonDefault); 
+
   const audioRef = useRef(null);
   const cauldronClickRef = useRef(null);
 
-  useEffect(() => {
-    // Set initial screen width to determine if it’s mobile
-    setIsMobile(window.innerWidth <= 768);
+  // I ended up replacing the code below with a media query in my css to make the game more mobile-friendly
+  // useEffect(() => {
+  // 
+  //   // This was given up on
+  //   setIsMobile(window.innerWidth <= 768);
 
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
+  //   const handleResize = () => {
+  //     setIsMobile(window.innerWidth <= 768);
+  //   };
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  //   window.addEventListener("resize", handleResize);
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
 
-  <Container sx={{ textAlign: "center", padding: "20px" }}>
-    {isMobile ? (
-      <Box
-        sx={
-          {
-            // styles here
-          }
-        }
-      >
-        <Typography variant="h4" gutterBottom>
-          This Game is Designed for PC
-        </Typography>
-        <Typography variant="body1">
-          Spooky Potion Shop is best experienced on a desktop. Please switch to
-          a PC for the full gameplay experience!
-        </Typography>
-      </Box>
-    ) : (
-      <>{/* Place the rest of your game components here */}</>
-    )}
-  </Container>;
+  // <Container sx={{ textAlign: "center", padding: "20px" }}>
+  //   {isMobile ? (
+  //     <Box
+  //       sx={
+  //         {
+  //           // styles here
+  //         }
+  //       }
+  //     >
+  //       <Typography variant="h4" gutterBottom>
+  //         This Game is Designed for PC
+  //       </Typography>
+  //       <Typography variant="body1">
+  //         Spooky Potion Shop is best experienced on a desktop. Please switch to
+  //         a PC for the full gameplay experience!
+  //       </Typography>
+  //     </Box>
+  //   ) : (
+  //     <>{/* Place the rest of your game components here */}</>
+  //   )}
+  // </Container>;
 
   // Handle help dialog open and close
   const handleHelpOpen = () => setHelpOpen(true);
@@ -150,12 +155,12 @@ function App() {
 
       {/* Music Toggle Button */}
       <IconButton
+        className="icon"
         sx={{
           position: "fixed",
           top: "10px",
           right: "100px",
           color: isMusicEnabled ? "white" : "grey",
-          className: "option-button",
         }}
         onClick={() => setIsMusicEnabled(!isMusicEnabled)}
       >
@@ -164,6 +169,7 @@ function App() {
 
       {/* Sound Effects Toggle Button */}
       <IconButton
+      className="icon"
         sx={{
           position: "fixed",
           top: "10px",
@@ -178,6 +184,7 @@ function App() {
 
       {/* Help Button */}
       <IconButton
+      className="icon"
         sx={{
           position: "fixed",
           top: "10px",
@@ -210,7 +217,7 @@ function App() {
       >
         <DialogContent sx={{ overflow: "hidden", maxHeight: "100%" }}>
           <Typography variant="body1">
-            Spooky Potion Shop is a short idle clicker game. It can run in the
+            Spooky Potion Shop is a simple idle clicker game. It can run in the
             background if you switch tabs, but be careful! If you reload or
             close the page, your progress will reset.
           </Typography>

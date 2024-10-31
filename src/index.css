@@ -220,29 +220,28 @@ h2 {
 }
 
 @media (max-width: 768px) {
+  :root {
+    padding: 0px;
+    margin: 0px;
+  }
+
+  .MuiTypography-root {
+    font-size: 12px !important;
+    padding: none !important;
+  }
 
   button {
     width: 100%;
-    font-size: 14px;
-    padding: 8px 10px;
-    margin-bottom: 10px;
-  }
-
-  .resources {
-    margin-top: 20px; 
-  }
-
-  .option-button {
-    position: fixed;
-    top: 8000px !important; 
-    right: 10px;
+    font-size: 12px !important;
+    padding: none !important;
   }
 
   .cauldron {
     position: relative;
-    bottom: 100px; 
-    margin-top: 100px;
-    transform: scale(0.9); 
+    bottom: 20px !important;
+    left: 50%;   
+    transform: translateX(-50%); 
+    z-index: -10 !important;
   }
 
   .mascot, .sidekick {
@@ -250,7 +249,28 @@ h2 {
     height: auto;
   }
 
-  .help-icon {
-    font-size: 12px;
+  .section-box {
+    padding: none !important;
+    flex: 1 1 100%;
   }
+
+  .potion-brewer-sections {
+    display: flex;
+    width: 110%;
+    margin-left: -10px;
+  }
+
+
+  .help-icon {
+    display: none !important;
+  }
+
+  .icon {
+   display: none !important;
+  }
+
+  .dialogue {
+    position: relative;
+  }
+
 }

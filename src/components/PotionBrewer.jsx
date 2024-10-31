@@ -95,11 +95,8 @@ const PotionBrewer = ({
       <Box className="potion-brewer-sections">
         {/* Resources Section */}
         <Box className="section-box">
-          <Typography variant="h6" className="section-label">
-            {/* Resources */}
-          </Typography>
           <Box>
-            <Box className="section-item">
+            <Box className="section-item resource">
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Tooltip
                   title="Click the cauldron to brew a batch of potions."
@@ -112,7 +109,7 @@ const PotionBrewer = ({
               <Typography>{potions}</Typography>
             </Box>
 
-            <Box className="section-item">
+            <Box className="section-item resource">
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Tooltip title="Sell potions to get gold." placement="top">
                   <HelpOutlineIcon className="help-icon" />
@@ -122,7 +119,7 @@ const PotionBrewer = ({
               <Typography>{funds}</Typography>
             </Box>
 
-            <Box className="section-item">
+            <Box className="section-item resource">
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Tooltip
                   title="Buy cauldrons to boost the number of potions brewed per batch."
@@ -144,7 +141,7 @@ const PotionBrewer = ({
               <Typography>{cauldrons}</Typography>
             </Box>
 
-            <Box className="section-item">
+            <Box className="section-item resource">
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Tooltip
                   title="Hire witches; each will auto-brew one batch of potions per second."
@@ -166,7 +163,7 @@ const PotionBrewer = ({
               <Typography>{witchesHired}</Typography>
             </Box>
 
-            <Box className="section-item">
+            <Box className="section-item resource">
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Tooltip
                   title="Sell a million potions to win the game!"
@@ -196,9 +193,6 @@ const PotionBrewer = ({
 
         {/* Actions Section */}
         <Box className="section-box">
-          <Typography variant="h6" className="section-label">
-            {/* Actions */}
-          </Typography>
 
           <Button
             className="sell-potions"

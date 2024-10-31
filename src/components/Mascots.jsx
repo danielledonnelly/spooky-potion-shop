@@ -12,6 +12,9 @@ const Mascots = ({ isSidekickVisible }) => {
   // Mascot state
   const [mascotDialogueIndex, setMascotDialogueIndex] = useState(0);
   const [mascotImage, setMascotImage] = useState(skeletonDefault);
+  const [mascotDialogue, setMascotDialogue] = useState(
+    "Hello and happy Halloween! Welcome to Spooky's Potion Shop."
+  );
 
   // Sidekick state
   const [sidekickDialogueIndex, setSidekickDialogueIndex] = useState(0);
@@ -47,6 +50,7 @@ const Mascots = ({ isSidekickVisible }) => {
   const progressMascotDialogue = () => {
     if (mascotDialogueIndex < mascotDialogueLines.length - 1) {
       setMascotDialogueIndex((prevIndex) => prevIndex + 1);
+      setMascotDialogue(mascotDialogueLines[mascotDialogueIndex + 1]);
     }
   };
 
@@ -113,33 +117,61 @@ const Mascots = ({ isSidekickVisible }) => {
     }
   }, [sidekickDialogueIndex]);
 
+  // Drag start handler to mark mascot as draggable
+  const handleDragStart = (e) => {
+    e.dataTransfer.setData("mascot", "dragging");
+  };
+
+  // Drop handler for mascot dragged onto cauldron
+  const handleDropOnCauldron = (e) => {
+    const mascot = e.dataTransfer.getData("mascot");
+    if (mascot === "dragging") {
+      setMascotDialogue("Please don't turn me into skeleton soup!");
+      setMascotImage(skeletonJump);
+    }
+  };
+
+  useEffect(() => {
+    // Add event listener to cauldron for handling mascot drop
+    const cauldron = document.querySelector(".cauldron");
+    if (cauldron) {
+      cauldron.addEventListener("drop", handleDropOnCauldron);
+      cauldron.addEventListener("dragover", (e) => e.preventDefault()); // Allow dropping
+
+      return () => {
+        cauldron.removeEventListener("drop", handleDropOnCauldron);
+        cauldron.removeEventListener("dragover", (e) => e.preventDefault());
+      };
+    }
+  }, []);
+
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
       {/* Mascot Section */}
-      <div className="mascot">
+      <div className="mascot" draggable onDragStart={handleDragStart}>
         <CardMedia
           component="img"
           image={mascotImage}
           alt="Mascot"
           className="mascot-image"
         />
-        {/* <Box
+        <Box
           sx={{
-            position: 'fixed',
-            bottom: '20px',
-            left: '10%',
-            backgroundColor: 'var(--black)',
-            color: '#fff',
-            padding: '15px 50px',
-            borderRadius: '10px',
-            width: '80%',
-            textAlign: 'center',
-            cursor: 'pointer',
+            position: "fixed",
+            bottom: "20px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            backgroundColor: "var(--black)",
+            color: "#fff",
+            padding: "15px 50px",
+            borderRadius: "10px",
+            width: "80%",
+            textAlign: "center",
+            cursor: "pointer",
           }}
-          onClick={progressMascotDialogue}
         >
-          <Typography variant="h6">{mascotDialogueLines[mascotDialogueIndex]}</Typography>
-        </Box> */}
+          <Typography variant="h6">{mascotDialogue}</Typography>
+        </Box>
       </div>
 
       {/* Sidekick Section (only render if isSidekickVisible is true) */}
@@ -151,49 +183,34 @@ const Mascots = ({ isSidekickVisible }) => {
             alt="Sidekick"
             className="sidekick-image"
           />
-          {/* <Box
-            sx={{
-              position: 'fixed',
-              bottom: '20px',
-              right: '10%',
-              backgroundColor: 'var(--black)',
-              color: '#B664AA',
-              padding: '15px 50px',
-              borderRadius: '10px',
-              width: '80%',
-              textAlign: 'center',
-              cursor: 'pointer',
-            }}
-            onClick={progressSidekickDialogue}
-          >
-            <Typography variant="h6">{sidekickDialogueLines[sidekickDialogueIndex]}</Typography>
-          </Box> */}
         </div>
       )}
+
       {/* Shared Dialogue Box */}
       <Box
+        className="dialogue"
         sx={{
           position: "fixed",
           bottom: "20px",
-          left: "50%", // This and the line below it ensure that the dialogue box is centred
+          left: "50%",
           transform: "translateX(-50%)", 
           backgroundColor: "var(--black)",
-          color: isSidekickVisible ? "#B664AA" : "#fff", // Switch color based on visibility
+          color: isSidekickVisible ? "#B664AA" : "#fff",
           padding: "15px 50px",
           borderRadius: "10px",
           width: "80%",
           textAlign: "center",
           cursor: "pointer",
-          zIndex: "3"
+          zIndex: "10"
         }}
         onClick={
           isSidekickVisible ? progressSidekickDialogue : progressMascotDialogue
-        } // Use correct function
+        }
       >
         <Typography variant="h6">
           {isSidekickVisible
             ? sidekickDialogueLines[sidekickDialogueIndex]
-            : mascotDialogueLines[mascotDialogueIndex]}
+            : mascotDialogue}
         </Typography>
       </Box>
     </div>
