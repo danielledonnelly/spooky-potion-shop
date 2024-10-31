@@ -37,7 +37,7 @@ function App() {
   const [totalPotionsSold, setTotalPotionsSold] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
-  // const [dialogue, setDialogue] = useState(""); 
+  const [dialogue, setDialogue] = useState(""); 
   // const [mascotImage, setMascotImage] = useState(skeletonDefault); 
 
   const audioRef = useRef(null);
@@ -255,6 +255,7 @@ function App() {
           setSidekickAppear={setSidekickAppear}
           totalPotionsSold={totalPotionsSold}
           setTotalPotionsSold={setTotalPotionsSold}
+          setDialogue={setDialogue}
         />
       </Box>
 

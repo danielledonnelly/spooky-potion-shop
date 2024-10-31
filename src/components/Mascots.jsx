@@ -15,6 +15,7 @@ const Mascots = ({ isSidekickVisible }) => {
   const [mascotDialogue, setMascotDialogue] = useState(
     "Hello and happy Halloween! Welcome to Spooky's Potion Shop."
   );
+  const [dragDialogue, setDragDialogue] = useState(null); // State for drag-specific dialogue
 
   // Sidekick state
   const [sidekickDialogueIndex, setSidekickDialogueIndex] = useState(0);
@@ -126,7 +127,7 @@ const Mascots = ({ isSidekickVisible }) => {
   const handleDropOnCauldron = (e) => {
     const mascot = e.dataTransfer.getData("mascot");
     if (mascot === "dragging") {
-      setMascotDialogue("Please don't turn me into skeleton soup!");
+      setDragDialogue("Please don't turn me into skeleton soup!");
       setMascotImage(skeletonJump);
     }
   };
@@ -155,23 +156,6 @@ const Mascots = ({ isSidekickVisible }) => {
           alt="Mascot"
           className="mascot-image"
         />
-        <Box
-          sx={{
-            position: "fixed",
-            bottom: "20px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            backgroundColor: "var(--black)",
-            color: "#fff",
-            padding: "15px 50px",
-            borderRadius: "10px",
-            width: "80%",
-            textAlign: "center",
-            cursor: "pointer",
-          }}
-        >
-          <Typography variant="h6">{mascotDialogue}</Typography>
-        </Box>
       </div>
 
       {/* Sidekick Section (only render if isSidekickVisible is true) */}
@@ -195,7 +179,7 @@ const Mascots = ({ isSidekickVisible }) => {
           left: "50%",
           transform: "translateX(-50%)", 
           backgroundColor: "var(--black)",
-          color: isSidekickVisible ? "#B664AA" : "#fff",
+          color: dragDialogue || !isSidekickVisible ? "#fff" : "#B664AA",
           padding: "15px 50px",
           borderRadius: "10px",
           width: "80%",
@@ -203,14 +187,19 @@ const Mascots = ({ isSidekickVisible }) => {
           cursor: "pointer",
           zIndex: "10"
         }}
-        onClick={
-          isSidekickVisible ? progressSidekickDialogue : progressMascotDialogue
-        }
+        onClick={() => {
+          if (dragDialogue) {
+            setDragDialogue(null);
+            setMascotImage(skeletonDefault);
+          } else {
+            isSidekickVisible ? progressSidekickDialogue() : progressMascotDialogue();
+          }
+        }}
       >
         <Typography variant="h6">
-          {isSidekickVisible
+          {dragDialogue || (isSidekickVisible
             ? sidekickDialogueLines[sidekickDialogueIndex]
-            : mascotDialogue}
+            : mascotDialogue)}
         </Typography>
       </Box>
     </div>

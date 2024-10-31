@@ -21,7 +21,7 @@ const PotionBrewer = ({
   setTotalPotionsSold,
 }) => {
   const [cauldronCost, setCauldronCost] = useState(50); // Initial cost of cauldrons is 75
-  const [witchCost, setWitchCost] = useState(100); // Initial cost to hire a witch is 400
+  const [witchCost, setWitchCost] = useState(75); // Initial cost to hire a witch is 400
   // const [marketerCost, setMarketerCost] = useState(100); // Cost to hire a marketer
 
   // Buy more cauldrons
@@ -81,6 +81,7 @@ const PotionBrewer = ({
         component="img"
         src={shopSign}
         alt="Shop Sign"
+        className="shop-sign"
         sx={{
           width: "100%",
           maxWidth: "700px", // Adjust for smaller size
@@ -144,7 +145,7 @@ const PotionBrewer = ({
             <Box className="section-item resource">
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Tooltip
-                  title="Hire witches; each will auto-brew one batch of potions per second."
+                  title="Each witch you hire will auto-brew one batch of potions per second."
                   placement="top"
                   componentsProps={{
                     // The blurb below is a workaround to increase width of tooltip for cauldrons specifically
@@ -166,13 +167,13 @@ const PotionBrewer = ({
             <Box className="section-item resource">
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Tooltip
-                  title="Sell a million potions to win the game!"
+                  title="Sell as many potions as you can!"
                   placement="top"
                 >
                   <HelpOutlineIcon className="help-icon" />
                 </Tooltip>
                 <Typography sx={{ fontWeight: "bold" }}>
-                  Total Potions Sold
+                  Sales
                 </Typography>
               </Box>
               <Typography>{totalPotionsSold}</Typography>
