@@ -172,9 +172,7 @@ const PotionBrewer = ({
                 >
                   <HelpOutlineIcon className="help-icon" />
                 </Tooltip>
-                <Typography sx={{ fontWeight: "bold" }}>
-                  Sales
-                </Typography>
+                <Typography sx={{ fontWeight: "bold" }}>Sales</Typography>
               </Box>
               <Typography>{totalPotionsSold}</Typography>
             </Box>
@@ -194,7 +192,6 @@ const PotionBrewer = ({
 
         {/* Actions Section */}
         <Box className="section-box">
-
           <Button
             className="sell-potions"
             onClick={() => onSell(potions, 1)}

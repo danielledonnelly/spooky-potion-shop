@@ -26,7 +26,7 @@ const Mascots = ({ isSidekickVisible }) => {
     "Hello and happy Halloween! Welcome to Spooky's Potion Shop.",
     "I've never seen a skeleton wearing a skin suit before! Where did you get it?",
     "Huh, what's that? You're a human?! My mistake! You must be the new manager, then.",
-    "My name is Spooky S. Skeleton, and I'm the owner of this shop!",
+    "My name is Spooky S. Skeleton, and I'm the owner of this shop!", 
     "It's a little bare-bones now, but with your help, this place will be crawling with customers!",
     "Click the cauldron a few times to brew some potions. Then, when you're ready, click the SELL POTIONS button.",
     "Each potion sells for one gold!  You can use gold to brew potions faster.",

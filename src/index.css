@@ -1,14 +1,14 @@
 /* I originally had a more advanced variable colour palette but I scaled it down because I barely ended up using it */
 
 :root {
-  --black: #1A1A1A;
+  --black: #1a1a1a;
   --white: #ffffff;
 }
 
 body {
   background-color: var(--black);
   color: var(--white);
-  background-image: url('./assets/background.png');
+  background-image: url("./assets/background.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -35,48 +35,80 @@ button {
 
 /* Sell Potions Button - Neon Green (switched) */
 button.sell-potions {
-  background: linear-gradient(135deg, #00ff99, #00cc66); /* Neon green gradient */
+  background: linear-gradient(
+    135deg,
+    #00ff99,
+    #00cc66
+  ); /* Neon green gradient */
   box-shadow: 0 0 15px rgba(0, 255, 150, 0.4), 0 0 30px rgba(0, 255, 150, 0.2); /* Green glow */
 }
 
 button.sell-potions:hover {
-  background: linear-gradient(135deg, #00ffcc, #00e699); /* Brighter green gradient */
+  background: linear-gradient(
+    135deg,
+    #00ffcc,
+    #00e699
+  ); /* Brighter green gradient */
   box-shadow: 0 0 20px rgba(0, 255, 170, 0.8), 0 0 40px rgba(0, 255, 170, 0.6); /* Enhanced green glow */
   transform: scale(1.05); /* Slightly enlarge on hover */
 }
 
 /* Buy Cauldron Button - Neon Blue (switched) */
 button.buy-cauldron {
-  background: linear-gradient(135deg, #00c6ff, #0072ff); /* Neon blue gradient */
+  background: linear-gradient(
+    135deg,
+    #00c6ff,
+    #0072ff
+  ); /* Neon blue gradient */
   box-shadow: 0 0 15px rgba(0, 150, 255, 0.4), 0 0 30px rgba(0, 150, 255, 0.2); /* Blue glow */
 }
 
 button.buy-cauldron:hover {
-  background: linear-gradient(135deg, #00e5ff, #0085ff); /* Brighter blue gradient */
+  background: linear-gradient(
+    135deg,
+    #00e5ff,
+    #0085ff
+  ); /* Brighter blue gradient */
   box-shadow: 0 0 20px rgba(0, 200, 255, 0.8), 0 0 40px rgba(0, 200, 255, 0.6); /* Enhanced blue glow */
   transform: scale(1.05);
 }
 
 /* Hire Witch Button - Neon Purple */
 button.hire-witch {
-  background: linear-gradient(135deg, #cc00ff, #9900cc); /* Neon purple gradient */
+  background: linear-gradient(
+    135deg,
+    #cc00ff,
+    #9900cc
+  ); /* Neon purple gradient */
   box-shadow: 0 0 15px rgba(200, 0, 255, 0.4), 0 0 30px rgba(200, 0, 255, 0.2); /* Purple glow */
 }
 
 button.hire-witch:hover {
-  background: linear-gradient(135deg, #e500ff, #b300cc); /* Brighter purple gradient */
+  background: linear-gradient(
+    135deg,
+    #e500ff,
+    #b300cc
+  ); /* Brighter purple gradient */
   box-shadow: 0 0 20px rgba(230, 0, 255, 0.8), 0 0 40px rgba(230, 0, 255, 0.6); /* Enhanced purple glow */
   transform: scale(1.05);
 }
 
 /* Hire Marketer Button - Neon Pink */
 button.hire-marketer {
-  background: linear-gradient(135deg, #ff0066, #cc0052); /* Neon pink gradient */
+  background: linear-gradient(
+    135deg,
+    #ff0066,
+    #cc0052
+  ); /* Neon pink gradient */
   box-shadow: 0 0 15px rgba(255, 0, 100, 0.4), 0 0 30px rgba(255, 0, 100, 0.2); /* Pink glow */
 }
 
 button.hire-marketer:hover {
-  background: linear-gradient(135deg, #ff3385, #cc3366); /* Brighter pink gradient */
+  background: linear-gradient(
+    135deg,
+    #ff3385,
+    #cc3366
+  ); /* Brighter pink gradient */
   box-shadow: 0 0 20px rgba(255, 0, 120, 0.8), 0 0 40px rgba(255, 0, 120, 0.6); /* Enhanced pink glow */
   transform: scale(1.05);
 }
@@ -101,7 +133,7 @@ h2 {
 .grid-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 20px; 
+  grid-gap: 20px;
   justify-content: center;
   align-items: center;
   position: absolute;
@@ -126,32 +158,31 @@ h2 {
 
 .mascot {
   position: absolute !important;
-  top: 25%;           
-  left: 5%;          
+  top: 25%;
+  left: 5%;
   z-index: 0;
 }
 
 .mascot-image {
-  width: 150px;      
-  height: auto;      
-  max-height: 450px;  
-  object-fit: contain; 
+  width: 150px;
+  height: auto;
+  max-height: 450px;
+  object-fit: contain;
 }
 
 .sidekick {
   position: absolute !important;
-  top: 25%;           
-  right: 5%;        
+  top: 25%;
+  right: 5%;
   z-index: 0;
 }
 
 .sidekick-image {
-  width: 150px;      
-  height: auto;      
-  max-height: 450px; 
-  object-fit: contain; 
+  width: 150px;
+  height: auto;
+  max-height: 450px;
+  object-fit: contain;
 }
-
 
 /* Potion Brewer Styles */
 .potion-brewer-container {
@@ -231,13 +262,14 @@ h2 {
   .cauldron {
     position: relative;
     bottom: 20px !important;
-    left: 50%;   
-    transform: translateX(-50%); 
+    left: 50%;
+    transform: translateX(-50%);
     z-index: -10 !important;
   }
 
-  .mascot, .sidekick {
-    max-width: 200px; 
+  .mascot,
+  .sidekick {
+    max-width: 200px;
     height: auto;
   }
 
@@ -255,18 +287,16 @@ h2 {
     width: 110%;
   }
 
-
   .help-icon {
     display: none !important;
   }
 
   .icon {
-   display: none !important;
+    display: none !important;
   }
 
   .dialogue {
     position: relative;
-    max-width: 300px !important;
+    max-width: 250px !important;
   }
-
 }

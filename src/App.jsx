@@ -1,3 +1,7 @@
+// HAPPY HALLOWEEN!
+// This game was inspired by Cookie Clicker and Potionomics
+// Designed in Canva, powered by React and Vite
+
 import React, { useState, useRef, useEffect } from "react";
 import {
   Container,
@@ -37,15 +41,15 @@ function App() {
   const [totalPotionsSold, setTotalPotionsSold] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
-  const [dialogue, setDialogue] = useState(""); 
-  // const [mascotImage, setMascotImage] = useState(skeletonDefault); 
+  const [dialogue, setDialogue] = useState("");
+  // const [mascotImage, setMascotImage] = useState(skeletonDefault);
 
   const audioRef = useRef(null);
   const cauldronClickRef = useRef(null);
 
   // I ended up replacing the code below with a media query in my css to make the game more mobile-friendly
   // useEffect(() => {
-  // 
+  //
   //   // This was given up on
   //   setIsMobile(window.innerWidth <= 768);
 
@@ -169,7 +173,7 @@ function App() {
 
       {/* Sound Effects Toggle Button */}
       <IconButton
-      className="icon"
+        className="icon"
         sx={{
           position: "fixed",
           top: "10px",
@@ -184,14 +188,14 @@ function App() {
 
       {/* Help Button */}
       <IconButton
-      className="icon"
+        className="icon"
         sx={{
           position: "fixed",
           top: "10px",
           right: "10px",
           color: "white",
           zIndex: "1000",
-          className: "option-button"
+          className: "option-button",
         }}
         onClick={handleHelpOpen}
       >
@@ -260,6 +264,7 @@ function App() {
       </Box>
 
       <Box
+        className="cauldron-container"
         sx={{
           position: "fixed",
           bottom: "100px",
