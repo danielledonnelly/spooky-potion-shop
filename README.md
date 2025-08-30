@@ -1,7 +1,9 @@
 # [Spooky Potion Shop](http://danielledonnelly.github.io/spooky-potion-shop/)
 
-### Game Description
-It's Halloween night, so get ready for your first shift as the new manager at Spooky's Potion Shop. Click the cauldron to brew potions, sell them for funds, and hire workers to build your spooky empire. **Please note that this project is a work in progress!**
+## Game Description
+It's Halloween night, so get ready for your first shift as the new manager at Spooky's Potion Shop. Click the cauldron to brew potions, sell them for funds, and hire workers to build your spooky empire.**
+
+## Overview
 
 ### Features
 ✦ Spooktacular atmosphere with cute characters and kooky humour
