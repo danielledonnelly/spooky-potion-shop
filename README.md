@@ -17,12 +17,9 @@ It's Halloween night, so get ready for your first shift as the new manager at Sp
 <br>5. ????????????
 <br>6. Profit
 
-### Technical Details
-✦ Built with React and Vite
-<br>✦ Material UI for components and styling
-
 ### Dependencies
 ✦ React
+<br>✦ Vite
 <br>✦ Material UI
 <br>✦ React Draggable*
 <br>✦ Material UI Icons
