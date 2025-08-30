@@ -23,7 +23,5 @@ It's Halloween night, so get ready for your first shift as the new manager at Sp
 ✦ React
 <br>✦ Vite
 <br>✦ Material UI
-<br>✦ React Draggable*
+<br>✦ React Draggable
 <br>✦ Material UI Icons
-
-\* Draggable is only used for a minor in-game easter egg. Try dragging Spooky the skeleton into the cauldron when playing on PC to test it out!
